@@ -231,5 +231,143 @@ public class Questions {
                         "3- methodName()\n" +
                         "4- methodName.\n"
                 , 3);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- In which country are the world’s 10 coldest cities located?\n\n" +
+                        "1- USA.\n" +
+                        "2- RUSSIA.\n" +
+                        "3- SWEDEN.\n" +
+                        "4- CANADA.\n"
+                , 2);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which country has three capital cities?\n\n" +
+                        "1- NIGERIA.\n" +
+                        "2- SOUTH AFRICA.\n" +
+                        "3- AUSTRALIA.\n" +
+                        "4- CHILE.\n"
+                , 2);
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which is the smallest country in the world?\n\n" +
+                        "1- BARBADOS.\n" +
+                        "2- CYPRUS.\n" +
+                        "3- MALTA.\n" +
+                        "4- VATICAN CITY.\n"
+                , 4);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which continent is home to the most countries?\n\n" +
+                        "1- ASIA.\n" +
+                        "2- AFRICA.\n" +
+                        "3- EUROPE.\n" +
+                        "4- SOUTH AMERICA.\n"
+                , 2);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q-  Which of these is NOT one of the 13 countries crossed by the Equator?\n\n" +
+                        "1- ECUADOR.\n" +
+                        "2- INDONESIA.\n" +
+                        "3- KENYA.\n" +
+                        "4- EGYPT.\n"
+                , 4);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which is the most linguistically diverse country in the world?\n\n" +
+                        "1- PAPUA NEW GUINEA.\n" +
+                        "2- NIGERIA.\n" +
+                        "3- INDIA.\n" +
+                        "4- BRAZIL.\n"
+                , 1);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which country is home to — by far — the most pyramids in the world?\n\n" +
+                        "1- EGYPT.\n" +
+                        "2- COLOMBIA.\n" +
+                        "3- SUDAN.\n" +
+                        "4- CAMBODIA.\n"
+                , 3);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which of these countries was NOT a part of the Soviet Union?\n\n" +
+                        "1- GEORGIA.\n" +
+                        "2- UKRAINE.\n" +
+                        "3- POLAND.\n" +
+                        "4- BELARUS.\n"
+                , 3);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which of these cities is NOT a national capital?\n\n" +
+                        "1- CAIRO.\n" +
+                        "2- PRAGUE.\n" +
+                        "3- BANGKOK.\n" +
+                        "4- SYDNEY.\n"
+                , 4);
+
+
+        questions.put("THEME: COUNTRIES\n\n" +
+                        "Q- Which of these countries is NOT recognized by the United Nations?\n\n" +
+                        "1- ISRAEL.\n" +
+                        "2- IRAN.\n" +
+                        "3- TAIWAN.\n" +
+                        "4- CYPRUS.\n"
+                , 3);
+
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What does a compiler do?\n\n" +
+                        "1- Translates computer code from machine level to byte code.\n" +
+                        "2- Translates computer code from higher-level programming language to machine code.\n" +
+                        "3- Translates computer code from lower-level programming language to higher-level programming language.\n" +
+                        "4- A compiler does nothing.\n"
+                , 2);
+
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- Which company was behind the creation of Java?\n\n" +
+                        "1- Microsoft.\n" +
+                        "2- Sun Microsystems.\n" +
+                        "3- Apple.\n" +
+                        "4- Borland.\n"
+                , 2);
+
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What was the original name for Java?\n\n" +
+                        "1- Ada.\n" +
+                        "2- C++.\n" +
+                        "3- Oak.\n" +
+                        "4- Lisp.\n"
+                , 3);
+
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What is the name of the inventor (or father) of Java?\n\n" +
+                        "1- Dennis Ritchie.\n" +
+                        "2- Bill Gates.\n" +
+                        "3- James Gosling.\n" +
+                        "4- Bjarne Stroustrup.\n"
+                , 3);
+
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What is the name of the class that all Java classes inherit (directly or indirectly) from?\n\n" +
+                        "1- ClassLoader.\n" +
+                        "2- Class.\n" +
+                        "3- Object.\n" +
+                        "4- None of the above.\n"
+                , 3);
+
+
     }
 }
+
+

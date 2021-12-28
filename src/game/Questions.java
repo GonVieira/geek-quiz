@@ -126,5 +126,54 @@ public class Questions {
                         "3- XBOX 360.\n" +
                         "4- Wii.\n"
                 , 2);
+
+        //GON QUESTIONS
+        questions.put("THEME: STAR WARS\n\n" +
+                        "Q- Who is the young Jedi knight who becomes Dark Vader?\n\n" +
+                        "1- Anakin Skywalker.\n" +
+                        "2- Luke Skywalker.\n" +
+                        "3- Obi-wan Kenobi.\n" +
+                        "4- Qui-Gon Jinn.\n"
+                , 1);
+
+        questions.put("THEME: STAR WARS\n\n" +
+                        "Q- What is the name of Han Solo's spaceship?\n\n" +
+                        "1- Normandy SR-2.\n" +
+                        "2- Tantive IV.\n" +
+                        "3- USS Enterprise.\n" +
+                        "4- Millenium Falcon.\n"
+                , 4);
+
+        questions.put("THEME: FINAL FANTASY\n\n" +
+                        "Q- Which Final Fantasy VII character is known for a giant sword and spiky hair?\n\n" +
+                        "1- Sephiroth.\n" +
+                        "2- Guts.\n" +
+                        "3- Cloud Strife.\n" +
+                        "4- Geralt of Rivia.\n"
+                , 3);
+
+        questions.put("THEME: GAMING\n\n" +
+                        "Q- What's the name of The \"Legend of Zelda\" protagonist?\n\n" +
+                        "1- Princess Zelda.\n" +
+                        "2- Samus Aran.\n" +
+                        "3- Link.\n" +
+                        "4- John Wick.\n"
+                , 3);
+
+        questions.put("THEME: THE WITCHER\n\n" +
+                        "Q- Where is the School of the Wolf located?\n\n" +
+                        "1- Kaer Morhen.\n" +
+                        "2- Ard Carraigh.\n" +
+                        "3- Gwenllech.\n" +
+                        "4- Novigrad.\n"
+                , 1);
+
+        questions.put("THEME: GAMING\n\n" +
+                        "Q- What's the name of \"Resident Evil 3\" main antagonist?\n\n" +
+                        "1- Mister X.\n" +
+                        "2- Ada Wong.\n" +
+                        "3- Nemesis.\n" +
+                        "4- Jill Valentine.\n"
+                , 3);
     }
 }

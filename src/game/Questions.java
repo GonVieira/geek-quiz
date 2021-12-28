@@ -175,5 +175,61 @@ public class Questions {
                         "3- Nemesis.\n" +
                         "4- Jill Valentine.\n"
                 , 3);
+
+        questions.put("THEME: GAMING\n\n" +
+                        "Q- In which game series does Solid Snake belongs to?\n\n" +
+                        "1- Metroid.\n" +
+                        "2- Call of Duty.\n" +
+                        "3- Borderlands.\n" +
+                        "4- Metal Gear.\n"
+                , 4);
+
+        questions.put("THEME: GAMING\n\n" +
+                        "Q- Who said the following quote \"Did I ever tell you the definition of insanity?\".\n\n" +
+                        "1- Vaas.\n" +
+                        "2- Ezio Auditore.\n" +
+                        "3- Master Chief.\n" +
+                        "4- Doomguy.\n"
+                , 1);
+
+        questions.put("THEME: THE WITCHER\n\n" +
+                        "Q- What was the first surname Geralt of Rivia chose?\n\n" +
+                        "1- Ravix of Fourhorn.\n" +
+                        "2- Geralt Roger Eric du Haute-Bellegarde.\n" +
+                        "3- Geralt of Vengerberg.\n" +
+                        "4- Geraldo da Ribeira.\n"
+                , 2);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What does HTML stand for?\n\n" +
+                        "1- Hyper Trainer Marking Language.\n" +
+                        "2- Hyper Text Marketing Language.\n" +
+                        "3- Hyper Text Markup Language.\n" +
+                        "4- Hyper Text Markup Leveler.\n"
+                , 3);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- Class B inherits from Class A, what cannot be said:\n\n" +
+                        "1- B is a sub-class of A.\n" +
+                        "2- A is a super-class of B.\n" +
+                        "3- B has access to private members of A.\n" +
+                        "4- B has access to protected members of A.\n"
+                , 3);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What is the Java keyword that creates inheritance?\n\n" +
+                        "1- Enlarge.\n" +
+                        "2- Extends.\n" +
+                        "3- Inherits.\n" +
+                        "4- Inheritance.\n"
+                , 2);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- How do you create a method in Java?\n\n" +
+                        "1- (methodName)\n" +
+                        "2- methodName[]\n" +
+                        "3- methodName()\n" +
+                        "4- methodName.\n"
+                , 3);
     }
 }

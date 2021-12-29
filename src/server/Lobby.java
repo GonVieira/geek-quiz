@@ -38,6 +38,7 @@ public class Lobby implements Runnable{
             }
         }
     }
+
     public void broadcastMessage(String messageToSend){
         for(Lobby lobby : lobby){
             try {

@@ -29,7 +29,7 @@ public class Client {
             bufferedWriter.flush();
 
             Scanner sc = new Scanner(System.in);
-            while (!socket.isConnected()) {
+            while (socket.isConnected()) {
                 String messageToSend = sc.nextLine();
                 bufferedWriter.write(username + ": " + messageToSend);
                 bufferedWriter.newLine();
@@ -78,7 +78,7 @@ public class Client {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your username for the group chat: ");
         String username = sc.nextLine();
-        Socket socket = new Socket("192.168.1.209", 1234);
+        Socket socket = new Socket("127.0.0.1", 1234);
         Client client = new Client(socket, username);
         client.listenForMessage();
         client.sendMessage();

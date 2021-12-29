@@ -14,9 +14,8 @@ public class Server {
              while(!serverSocket.isClosed()){
                  Socket socket = serverSocket.accept();
                  System.out.println("A new client has connected!");
-                 Lobby lobby = new Lobby(socket);
 
-                 Thread thread = new Thread(lobby);
+                 Thread thread = new Thread(new Lobby(socket));
                  thread.start();
              }
          } catch (IOException e) {

@@ -8,7 +8,6 @@ public class Player {
 
     private Socket socket;
     private int score = 0;
-   // private HashMap<String, Integer> questions;
 
     private LinkedList answeredQuestions;
 
@@ -24,7 +23,6 @@ public class Player {
             return true;
         }
         return false;
-
     }
 
     public void checkIfIsCorrect(int answer, Integer correctAnswer) {
@@ -38,5 +36,13 @@ public class Player {
             System.out.println("Incorrect answer.");
             System.out.println("Score: " + score);
         }
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

@@ -10,6 +10,7 @@ public class Lobby implements Runnable{
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
+    private int numberOfClients;
 
     public Lobby(Socket socket) {
         try{
@@ -19,6 +20,7 @@ public class Lobby implements Runnable{
             this.clientUsername = bufferedReader.readLine();
             lobby.add(this);
             broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
+            numberOfClients++;
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
@@ -55,6 +57,7 @@ public class Lobby implements Runnable{
 
     public void removeClient() {
         lobby.remove(this);
+        numberOfClients--;
         broadcastMessage("SERVER: " + clientUsername + " has left the chat!");
     }
 
@@ -73,5 +76,13 @@ public class Lobby implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getNumberOfClients() {
+        return numberOfClients;
+    }
+
+    public void setNumberOfClients(int numberOfClients) {
+        this.numberOfClients = numberOfClients;
     }
 }

@@ -5,7 +5,9 @@ import java.util.HashMap;
 public class Questions {
 
     private static HashMap<String, Integer> questions = new HashMap<>();
+
     public Questions() {
+
         questions.put("THEME: PROGRAMMING\n\n" +
                         "Q- What is the use of final keyword in Java?\n\n" +
                         "1- When a class is made final, a sublcass of it can not be created.\n" +
@@ -476,8 +478,10 @@ public class Questions {
                         "3- Double.\n" +
                         "4- All of the above.\n"
                 , 1);
+
     }
-    public static HashMap<String, Integer> getQuestions() {
+
+    public HashMap<String, Integer> getQuestions() {
         return questions;
     }
 }

@@ -14,7 +14,7 @@ public class QuestionManager {
             out.writeObject(outMap);
             out.close();
             fileOut.close();
-            System.out.println("Serialized questions saved in /tmp/srcquestions.ser");
+            System.out.println("Serialized questions saved in /tmp/src/questions/questions.ser");
         } catch (IOException i) {
             i.printStackTrace();
         }

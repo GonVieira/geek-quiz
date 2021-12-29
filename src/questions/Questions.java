@@ -1,4 +1,4 @@
-package game;
+package questions;
 
 import java.util.HashMap;
 

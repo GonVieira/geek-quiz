@@ -366,7 +366,117 @@ public class Questions {
                         "4- None of the above.\n"
                 , 3);
 
+        questions.put("THEME: SPIDER MAN\n\n" +
+                        "Q- Which Spider-Man villain is a disgruntled visual effects artist?\n\n" +
+                        "1- Batman.\n" +
+                        "2- Dr. Octopus.\n" +
+                        "3- Mysterio.\n" +
+                        "4- Sandman.\n"
+                , 3);
 
+        questions.put("THEME: SCOOBY-DOO\n\n" +
+                        "Q- What type of dog is Scooby?\n\n" +
+                        "1- Bulldog.\n" +
+                        "2- Great Dane.\n" +
+                        "3- Chi-hua-hua.\n" +
+                        "4- Yorkshire Terrier.\n"
+                , 2);
+
+        questions.put("THEME: RICK & MORTY\n\n" +
+                        "Q- What is Rick's last name?\n\n" +
+                        "1- Obama.\n" +
+                        "2- Lima.\n" +
+                        "3- Fernandez.\n" +
+                        "4- Sanchez.\n"
+                , 4);
+
+        questions.put("THEME: PEAKY BLINDERS\n\n" +
+                        "Q- What is the official name of the Peaky Blinders’ family business?\n\n" +
+                        "1- Shelby Industries Limited.\n" +
+                        "2- Shelby Company Limited.\n" +
+                        "3- Shelby's Factory.\n" +
+                        "4- Grace's Secret.\n"
+                , 2);
+
+        questions.put("THEME: HOW I MET YOUR MOTHER\n\n" +
+                        "Q- Barney Stinson became friends with Ted, Marshall and Lily after meeting Ted in 2001 where?\n\n" +
+                        "1- MacLaren's urinal.\n" +
+                        "2- At a concert.\n" +
+                        "3- MacLaren's entry.\n" +
+                        "4- Empire State Building.\n"
+                , 1);
+
+        questions.put("THEME: COUNTER-STRIKE\n\n" +
+                        "Q- What is the most popular map is Counter-Strike ?\n\n" +
+                        "1- Office.\n" +
+                        "2- Lake.\n" +
+                        "3- Dust II.\n" +
+                        "4- Inferno.\n"
+                , 3);
+
+        questions.put("THEME: STRANGER THINGS\n\n" +
+                        "Q- During season two, the boys dress up for Halloween as characters from which 80s movie?\n\n" +
+                        "1- Power Rangers.\n" +
+                        "2- Ghostbusters.\n" +
+                        "3- Charlie Chaplin.\n" +
+                        "4- Rambo.\n"
+                , 2);
+
+        questions.put("THEME: COMICS\n\n" +
+                        "Q- The Punisher is a fictional character appearing in comic books published by which company?\n\n" +
+                        "1- Fox Atomic Comics.\n" +
+                        "2- DC Comics.\n" +
+                        "3- Marvel Comics.\n" +
+                        "4- AC Comics.\n"
+                , 3);
+
+        questions.put("THEME: VIDEOGAMES\n\n" +
+                        "Q- Mario Kart is a video game series publish by which company?\n\n" +
+                        "1- Sony.\n" +
+                        "2- Nintendo.\n" +
+                        "3- Microsoft.\n" +
+                        "4- Sega.\n"
+                , 2);
+
+        questions.put("THEME: VIDEOGAMES\n\n" +
+                        "Q- What are the names of the two teams in Among Us?\n\n" +
+                        "1- Imposters and Crewmates.\n" +
+                        "2- Aliens and Humans.\n" +
+                        "3- Team Alpha and Team Beta.\n" +
+                        "4- Cats and Dogs.\n"
+                , 1);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What is a class in java?\n\n" +
+                        "1- A class is a special data type..\n" +
+                        "2- A class is used to allocate memory to a data type..\n" +
+                        "3- A class is a blue print from which individual objects are created. A class can contain fields and methods to describe the behavior of an object..\n" +
+                        "4-None of the above..\n"
+                , 3);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- What is the default value of byte variable?\n\n" +
+                        "1- 0\n" +
+                        "2- 0.0\n" +
+                        "3- null.\n" +
+                        "4- undefined.\n"
+                , 1);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- Which method must be implemented by all threads?\n\n" +
+                        "1- wait().\n" +
+                        "2- start().\n" +
+                        "3- stop().\n" +
+                        "4- run().\n"
+                , 4);
+
+        questions.put("THEME: PROGRAMMING\n\n" +
+                        "Q- Which of these is the most popularly used class as a key in a HashMap?\n\n" +
+                        "1- Integer.\n" +
+                        "2- String.\n" +
+                        "3- Double.\n" +
+                        "4- All of the above.\n"
+                , 1);
     }
 }
 

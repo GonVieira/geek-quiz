@@ -3,9 +3,9 @@ package game;
 import java.util.ArrayList;
 
 public class Team {
-    private int firewalls;
-    private int viruses;
-    private int antivirus;
+    private int firewalls; //HP
+    private int viruses;  //Attack
+    private int antivirus;  //Defense
     private final ArrayList<Player> players;
 
     public Team(ArrayList<Player> players){
@@ -24,6 +24,7 @@ public class Team {
     }
 
     public void updateFirewalls(Team opposingTeam){
+
         this.firewalls = this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus),0));
     }
 
@@ -36,12 +37,11 @@ public class Team {
         return viruses;
     }
 
-    public int getAntivirus() {
-        return antivirus;
-    }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    public void addPlayer(Player player){
+        players.add(player);
+    }
 }

@@ -2,26 +2,28 @@ package game;
 
 import questions.Questions;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+import static Utility.Utility.*;
 
 public class Game {
-    private Team team1;
-    private Team team2;
-    private Questions questions;
-    private int round;
+    private final Team team1;
+    private final Team team2;
+    private final Questions questions = new Questions();
+    private static int round;
 
 
-    //Instanciar os metodos necessarios para começar o jogo
-    public void gameStart() {
-        distributePlayers(team1);
-        distributePlayers(team2);
-        gameRounds(round++);
+    public Game(Team team1, Team team2) {
+        this.team1 = team1;
+        this.team2 = team2;
+
     }
 
     //Metodo para chamar as fases do jogo
-    public void gameRounds(int numberOfRounds) {
+    public void gameRounds() {
         while (team1.getFirewalls() > 0 && team2.getFirewalls() > 0) {
-            System.out.println("ROUND" + numberOfRounds);
+            System.out.println("ROUND" + round);
             questionPhase();
             spendPhase();
             aftermathPhase();
@@ -50,58 +52,65 @@ public class Game {
     //Pancada velha
     public void aftermathPhase() {
         System.out.println("AFTERMATH PHASE");
+        team1.updateFirewalls(team2);
+        team2.updateFirewalls(team1);
+        //Utility.printRoundOutcome();
     }
 
-    //metodo para distribuir os jogadores pela equipa
-    public void distributePlayers(Team team) {
-        /*
-        Pegar no numero total de jogadores no lobby.
-        Adicionar a cada equipa jogadores aleatorios de forma a criar 2 equipas com o mesmo numero de jogadores.
-         */
-    }
 
     //metodo para distribuir as perguntas por cada jogador da equipa
     public void distributeQuestions(Team team) {
-        for (int i = 0; i < team.getPlayers().size(); i++) {
-            //team.getPlayers().get(i).
-            //team.getPlayers().get(i).checkIfIsCorrect();
+        List<String> keysAsArray = new ArrayList<>(this.questions.getQuestions().keySet());
+
+        for (Player player : team.getPlayers()) {
+            String question = keysAsArray.get((int) (Math.random() * keysAsArray.size()));
+
+            while (player.questionAnswered(question)) {
+                question = keysAsArray.get((int) (Math.random() * keysAsArray.size()));
+            }
+            int correctAnswer = this.questions.getQuestions().get(question);
+
+            player.receiveQuestion(question, correctAnswer);
+
         }
     }
 
 
     //metodo para perguntar a cada jogador o que quer fazer com os pontos
     public void spendingPhase(Team team) {
-        for (int i = 0; i < team.getPlayers().size(); i++) {
-            Player player = team.getPlayers().get(i);
+        for (Player player: team.getPlayers()) {
+
             if (player.getScore() > 0) {
+
                 System.out.println("Choose one of the following options:");
-                Scanner sc = new Scanner(System.in);
-                String option1 = sc.nextLine();
+                String option1 = checkIfValidInput(1,2);
                 System.out.println("1)SPEND POINTS              2)PASS");
-                if (option1.equalsIgnoreCase("1")) {
-                    String option2 = sc.nextLine();
+
+                if (option1.equals("1")) {
+                    String option2 = checkIfValidInput(1,2);
                     System.out.println("Choose one of the following options:");
                     System.out.println("1)VIRUS(ATK)            2)ANTI-VIRUS(DEF)");
-                    if (option2.equalsIgnoreCase("1")) {
+
+                    if (option2.equals("1")) {
                         System.out.println(player.getScore());
                         System.out.println("How many points do you want to spend?");
-                        int quantity = Integer.parseInt(sc.nextLine());
-                        team.addVirus(quantity);
-                        int scoreLeft = player.getScore() - quantity;
+                        String quantity = checkIfValidInput(1, player.getScore());
+                        team.addVirus(Integer.parseInt(quantity));
+                        int scoreLeft = player.getScore() - Integer.parseInt(quantity);
                         player.setScore(scoreLeft);
                     } else {
                         System.out.println(player.getScore());
                         System.out.println("How many points do you want to spend?");
-                        int quantity = Integer.parseInt(sc.nextLine());
-                        team.addAntivirus(quantity);
-                        int scoreLeft = player.getScore() - quantity;
+                        String quantity = checkIfValidInput(1, player.getScore());
+                        team.addAntivirus(Integer.parseInt(quantity));
+                        int scoreLeft = player.getScore() - Integer.parseInt(quantity);
                         player.setScore(scoreLeft);
                     }
                 } else {
                     System.out.println("PHASE PASSED");
                 }
             }
-            System.out.println("I DON+'T HAVE ANY POINTS TO SPEND");
+            System.out.println("YOU DON'T HAVE ANY POINTS TO SPEND");
         }
     }
 }

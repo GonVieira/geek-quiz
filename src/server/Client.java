@@ -1,5 +1,7 @@
 package server;
 
+import game.Player;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;

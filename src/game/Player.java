@@ -1,17 +1,23 @@
 package game;
 
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import static Utility.Utility.*;
 
 public class Player {
 
     private Socket socket;
     private int score = 0;
+    private ArrayList<String> answeredQuestions = new ArrayList<>();
 
-    private LinkedList answeredQuestions;
 
 
+    public void receiveQuestion(String question, int correctAnswer) {
+        //print String
+        saveQuestion(question);
+        String choice = checkIfValidInput(1,4);
+        checkIfIsCorrect(Integer.parseInt(choice), correctAnswer);
+    }
 
     public void saveQuestion(String question) {
         answeredQuestions.add(question);
@@ -19,10 +25,7 @@ public class Player {
 
     public boolean questionAnswered(String question) {
 
-        if (answeredQuestions.contains(question)) {
-            return true;
-        }
-        return false;
+        return answeredQuestions.contains(question);
     }
 
     public void checkIfIsCorrect(int answer, Integer correctAnswer) {
@@ -45,4 +48,5 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
 }

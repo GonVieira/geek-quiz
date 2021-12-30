@@ -26,7 +26,7 @@ public class Lobby implements Runnable {
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             lobby.add(this);
-            //broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
+
             numberOfClients++;
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -40,25 +40,32 @@ public class Lobby implements Runnable {
             bufferedWriter.write("Enter your username for the group chat: ");
             bufferedWriter.flush();
             this.clientUsername = bufferedReader.readLine();
+            broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
         } catch (IOException e) {
             e.printStackTrace();
         }
         while (socket.isConnected() && !Server.gameStarted) {
             try {
                 messageFromClient = bufferedReader.readLine();
-                if (messageFromClient.contains("#GEEKQUIZ")) {
+                System.out.println(messageFromClient);
+                if (messageFromClient.contains("#GEEKQUIZ")){
                     Server.gameStarted = true;
-
-                    broadcastMessage("GAME");
+                    bufferedWriter.write("\n\nGotcha! Let's get this game starting!");
                 }
-                broadcastMessage(messageFromClient);
+                broadcastMessage(clientUsername + ": " + messageFromClient);
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
                 break;
             }
         }
         //Game starts
-                    broadcastMessage("GAME STARTED");
+        try {
+            bufferedWriter.write("\n\nGAME IS ABOUT TO START\n\n");
+            bufferedWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        broadcastMessage("GAME IS ABOUT TO START");
 
     }
 
@@ -107,41 +114,4 @@ public class Lobby implements Runnable {
     public void setNumberOfClients(int numberOfClients) {
         this.numberOfClients = numberOfClients;
     }
-
-    /*public void sendMessage(){
-        try {
-            bufferedWriter.write(username);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-
-            Scanner sc = new Scanner(System.in);
-            while (socket.isConnected()) {
-                String messageToSend = sc.nextLine();
-                bufferedWriter.write(username + ": " + messageToSend);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-            }
-        } catch (IOException e) {
-            closeEverything(socket, bufferedReader, bufferedWriter);
-        }
-    }
-*/
-    public void listenForMessage(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String msgFromGroupChat;
-
-                while (socket.isConnected()) {
-                    try {
-                        msgFromGroupChat = bufferedReader.readLine();
-                        System.out.println(msgFromGroupChat);
-                    } catch (IOException e) {
-                        closeEverything(socket, bufferedReader, bufferedWriter);
-                    }
-                }
-            }
-        }).start();
-    }
-
 }

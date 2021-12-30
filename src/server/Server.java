@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Server {
 
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
     private Game game = new Game();
     public static boolean gameStarted = false;
 
@@ -22,7 +22,7 @@ public class Server {
         try {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
-                System.out.println("A new client has connected!");
+                System.out.println("A new client has connected: " + socket.getInetAddress().getHostAddress());
 
                 Thread thread = new Thread(new Lobby(socket));
                 thread.start();
@@ -46,5 +46,6 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(1234);
         Server server = new Server(serverSocket);
         server.startServer();
+        System.out.println("Server started.");
     }
 }

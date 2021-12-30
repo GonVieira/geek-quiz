@@ -7,25 +7,26 @@ import game.Team;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Lobby implements Runnable {
     public static ArrayList<Lobby> lobby = new ArrayList<>();
     private Socket socket;
+    //gameSocket
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
     private int numberOfClients;
     private Player player;
-    private Game game;
+
 
     public Lobby(Socket socket) {
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.clientUsername = bufferedReader.readLine();
             lobby.add(this);
-            broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
+            //broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
             numberOfClients++;
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -35,24 +36,30 @@ public class Lobby implements Runnable {
     @Override
     public void run() {
         String messageFromClient;
-
-        while (socket.isConnected()) {
+        try {
+            bufferedWriter.write("Enter your username for the group chat: ");
+            bufferedWriter.flush();
+            this.clientUsername = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        while (socket.isConnected() && !Server.gameStarted) {
             try {
                 messageFromClient = bufferedReader.readLine();
-              /*  if (messageFromClient.equals("#GEEKQUIZ")) {
+                if (messageFromClient.contains("#GEEKQUIZ")) {
+                    Server.gameStarted = true;
 
-                    ArrayList<Player> team1 = new ArrayList<>();
-                    ArrayList<Player> team2 = new ArrayList<>();
-                    for (int i = 0; i < lobby.size(); i++) {
-                        team1.add(lobby.get(i).player);
-                    }
-                }*/
+                    broadcastMessage("GAME");
+                }
                 broadcastMessage(messageFromClient);
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
                 break;
             }
         }
+        //Game starts
+                    broadcastMessage("GAME STARTED");
+
     }
 
     public void broadcastMessage(String messageToSend) {
@@ -101,5 +108,40 @@ public class Lobby implements Runnable {
         this.numberOfClients = numberOfClients;
     }
 
+    /*public void sendMessage(){
+        try {
+            bufferedWriter.write(username);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            Scanner sc = new Scanner(System.in);
+            while (socket.isConnected()) {
+                String messageToSend = sc.nextLine();
+                bufferedWriter.write(username + ": " + messageToSend);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+        } catch (IOException e) {
+            closeEverything(socket, bufferedReader, bufferedWriter);
+        }
+    }
+*/
+    public void listenForMessage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String msgFromGroupChat;
+
+                while (socket.isConnected()) {
+                    try {
+                        msgFromGroupChat = bufferedReader.readLine();
+                        System.out.println(msgFromGroupChat);
+                    } catch (IOException e) {
+                        closeEverything(socket, bufferedReader, bufferedWriter);
+                    }
+                }
+            }
+        }).start();
+    }
 
 }

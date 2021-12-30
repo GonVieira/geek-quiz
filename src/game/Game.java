@@ -2,17 +2,28 @@ package game;
 
 import questions.Questions;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 import static Utility.Utility.*;
 
 public class Game {
-    private final Team team1;
-    private final Team team2;
+    private Team team1;
+    private Team team2;
+    //private Socket socket;
     private final Questions questions = new Questions();
     private static int round;
 
+
+    public Game(Socket socket){
+        //this.socket = socket;
+    }
+
+    public Game(){
+        this.team1 = null;
+        this.team2 = null;
+    }
 
     public Game(Team team1, Team team2) {
         this.team1 = team1;
@@ -23,7 +34,7 @@ public class Game {
     //Metodo para chamar as fases do jogo
     public void gameRounds() {
         while (team1.getFirewalls() > 0 && team2.getFirewalls() > 0) {
-            System.out.println("ROUND" + round);
+            System.out.println("ROUND" + round); //BufferedWriter
             questionPhase();
             spendPhase();
             aftermathPhase();
@@ -113,4 +124,13 @@ public class Game {
             System.out.println("YOU DON'T HAVE ANY POINTS TO SPEND");
         }
     }
+
+    public void setTeam1(ArrayList<Player> players) {
+        this.team1 = new Team(players);
+    }
+
+    public void setTeam2(ArrayList<Player> players) {
+        this.team2 = new Team(players);
+    }
+
 }

@@ -2,20 +2,25 @@ package game;
 
 import java.net.Socket;
 import java.util.ArrayList;
+
 import static Utility.Utility.*;
 
 public class Player {
 
     private Socket socket;
+    private String name;
     private int score = 0;
     private ArrayList<String> answeredQuestions = new ArrayList<>();
 
 
+    public Player(String name) {
+        this.name = name;
+    }
 
     public void receiveQuestion(String question, int correctAnswer) {
         //print String
         saveQuestion(question);
-        String choice = checkIfValidInput(1,4);
+        String choice = checkIfValidInput(1, 4);
         checkIfIsCorrect(Integer.parseInt(choice), correctAnswer);
     }
 
@@ -45,8 +50,13 @@ public class Player {
         return score;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
+
 
 }

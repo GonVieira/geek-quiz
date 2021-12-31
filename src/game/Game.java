@@ -2,7 +2,6 @@ package game;
 
 import questions.Questions;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,24 +10,12 @@ import static Utility.Utility.*;
 public class Game {
     private Team team1;
     private Team team2;
-    //private Socket socket;
     private final Questions questions = new Questions();
     private static int round;
-
-
-    public Game(Socket socket){
-        //this.socket = socket;
-    }
 
     public Game(){
         this.team1 = null;
         this.team2 = null;
-    }
-
-    public Game(Team team1, Team team2) {
-        this.team1 = team1;
-        this.team2 = team2;
-
     }
 
     //Metodo para chamar as fases do jogo
@@ -133,4 +120,11 @@ public class Game {
         this.team2 = new Team(players);
     }
 
+    public Team getTeam1() {
+        return team1;
+    }
+
+    public Team getTeam2() {
+        return team2;
+    }
 }

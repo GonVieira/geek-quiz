@@ -3,32 +3,34 @@ package game;
 import java.util.ArrayList;
 
 public class Team {
-    private int firewalls; //HP
-    private int viruses;  //Attack
+    private int firewalls;  //HP
+    private int viruses;    //Attack
     private int antivirus;  //Defense
     private final ArrayList<Player> players;
 
-    public Team(ArrayList<Player> players){
+    public Team(ArrayList<Player> players) {
         this.players = players;
         this.firewalls = 5 * players.size();
         this.viruses = 0;
         this.antivirus = 0;
     }
 
-    public void addVirus(int virus){
+    public void addVirus(int virus) {
         this.viruses = this.viruses + virus;
     }
 
-    public void addAntivirus(int antivirus){
+    public void addAntivirus(int antivirus) {
         this.antivirus = this.antivirus + antivirus;
     }
 
-    public void updateFirewalls(Team opposingTeam){
+    public void updateFirewalls(Team opposingTeam) {
 
-        this.firewalls = this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus),0));
+        this.firewalls = this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus), 0));
     }
 
-    /**GETTERS**/
+    /**
+     * GETTERS
+     **/
     public int getFirewalls() {
         return firewalls;
     }
@@ -41,7 +43,11 @@ public class Team {
         return players;
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    public String getPlayersString(){
+        String result = null;
+        for(Player player : players){
+            result.concat(player.getName() + "\n");
+        }
+        return result;
     }
 }

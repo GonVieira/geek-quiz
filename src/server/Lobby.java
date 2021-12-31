@@ -31,7 +31,7 @@ public class Lobby implements Runnable {
     @Override
     public void run() {
         createUsername();
-        chatRoomPhase();
+        chatRoom();
         //Game starts
         while (socket.isConnected()) {
             printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
@@ -51,7 +51,7 @@ public class Lobby implements Runnable {
         }
     }
 
-    public void chatRoomPhase() {
+    public void chatRoom() {
         String messageFromClient;
         while (!gameStarted) {
             try {
@@ -60,7 +60,7 @@ public class Lobby implements Runnable {
                 closeEverything(socket, bufferedReader, printWriter);
                 break;
             }if (messageFromClient.equals("")){
-                chatRoomPhase();
+                chatRoom();
             }
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 if (lobbies.size() % 2 == 0) {

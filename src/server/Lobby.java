@@ -30,6 +30,17 @@ public class Lobby implements Runnable {
 
     @Override
     public void run() {
+        createUsername();
+        chatRoomPhase();
+        //Game starts
+        while (socket.isConnected()) {
+            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
+
+            printGameTeams(printWriter);
+        }
+    }
+
+    public void createUsername(){
         try {
             printWriter.println("Enter your username for the group chat: ");
             this.clientUsername = bufferedReader.readLine();
@@ -37,13 +48,6 @@ public class Lobby implements Runnable {
             broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        chatRoomPhase();
-        //Game starts
-        while (socket.isConnected()) {
-            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
-
-            printGameTeams(printWriter);
         }
     }
 

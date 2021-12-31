@@ -30,17 +30,6 @@ public class Lobby implements Runnable {
 
     @Override
     public void run() {
-       chatRoomPhase();
-        //Game starts
-        while (socket.isConnected()) {
-            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
-
-                game.printTeams(printWriter);
-        }
-    }
-
-    public void chatRoomPhase(){
-        String messageFromClient;
         try {
             printWriter.println("Enter your username for the group chat: ");
             this.clientUsername = bufferedReader.readLine();
@@ -49,12 +38,25 @@ public class Lobby implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        chatRoomPhase();
+        //Game starts
+        while (socket.isConnected()) {
+            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
+
+            printGameTeams(printWriter);
+        }
+    }
+
+    public void chatRoomPhase() {
+        String messageFromClient;
         while (!gameStarted) {
             try {
                 messageFromClient = bufferedReader.readLine();
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, printWriter);
                 break;
+            }if (messageFromClient.equals("")){
+                chatRoomPhase();
             }
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 if (lobbies.size() % 2 == 0) {

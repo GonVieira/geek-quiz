@@ -4,6 +4,7 @@ import game.Game;
 import game.Player;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void printGameTeams(PrintWriter printWriter){
+        game.printTeams(printWriter);
     }
 
     public synchronized static void gameHasStarted() {

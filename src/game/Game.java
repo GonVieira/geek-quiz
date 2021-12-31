@@ -113,7 +113,8 @@ public class Game {
         }
     }
 
-    public synchronized void printTeams(PrintWriter printWriter){
+    public void printTeams(PrintWriter printWriter){
+        printWriter.println("HELLO");
         printWriter.println("Team 1:\n\n" + team1.getPlayersString() + "------------");
             /*  try {
                 wait(5000);

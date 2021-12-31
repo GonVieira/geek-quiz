@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Utility.Utility.*;
-import static server.Server.game;
 
 public class Game {
     private Team team1;

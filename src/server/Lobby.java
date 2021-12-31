@@ -30,6 +30,16 @@ public class Lobby implements Runnable {
 
     @Override
     public void run() {
+       chatRoomPhase();
+        //Game starts
+        while (socket.isConnected()) {
+            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
+
+                game.printTeams(printWriter);
+        }
+    }
+
+    public void chatRoomPhase(){
         String messageFromClient;
         try {
             printWriter.println("Enter your username for the group chat: ");
@@ -57,19 +67,6 @@ public class Lobby implements Runnable {
                 printWriter.println("Number of participants must be even");
             }
             broadcastMessage(clientUsername + ": " + messageFromClient);
-        }
-        //Game starts
-        while (socket.isConnected()) {
-            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
-          /*  try {
-                wait(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
-            synchronized (game) {
-                game.printTeams(printWriter);
-            }
         }
     }
 

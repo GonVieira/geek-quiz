@@ -10,7 +10,7 @@ import static Utility.Utility.*;
 public class Game {
     private Team team1;
     private Team team2;
-    private final Questions questions = new Questions();
+    private static final Questions questions = new Questions();
     private static int round;
 
     public Game(){

@@ -8,9 +8,9 @@ import static Utility.Utility.*;
 public class Player {
 
     private Socket socket;
-    private String name;
+    private final String name;
     private int score = 0;
-    private ArrayList<String> answeredQuestions = new ArrayList<>();
+    private final ArrayList<String> answeredQuestions = new ArrayList<>();
 
 
     public Player(String name) {

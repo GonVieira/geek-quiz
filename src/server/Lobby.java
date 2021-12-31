@@ -4,7 +4,6 @@ import game.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import static server.Server.*;
 
@@ -40,22 +39,22 @@ public class Lobby implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (!Server.gameStarted) {
+        while (!gameStarted) {
             try {
                 messageFromClient = bufferedReader.readLine();
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, printWriter);
                 break;
             }
-                if (messageFromClient.contains("#GEEKQUIZ")) {
-                    if (lobbies.size() % 2 != 0) {
-                        printWriter.println("Number of participants must be even");
-                        return;
-                    }
-                    gameStarted = true;
+            if (messageFromClient.contains("#GEEKQUIZ")) {
+                if (lobbies.size() % 2 == 0) {
                     printWriter.println("\n\nGotcha! Let's get this game started!");
+                    Server.gameHasStarted();
+                    return;
                 }
-                broadcastMessage(clientUsername + ": " + messageFromClient);
+                printWriter.println("Number of participants must be even");
+            }
+            broadcastMessage(clientUsername + ": " + messageFromClient);
         }
         //Game starts
 

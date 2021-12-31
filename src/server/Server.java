@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Server {
 
     private final ServerSocket serverSocket;
-    public static Game game = new Game();
+    public static final Game game = new Game();
     public static boolean gameStarted = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
     public static ArrayList<Player> team1 = new ArrayList<>();
@@ -20,6 +20,10 @@ public class Server {
     public Server(ServerSocket serverSocket) {
 
         this.serverSocket = serverSocket;
+    }
+
+    public static void gameHasStarted() {
+        gameStarted = true;
     }
 
     public void startServer() {
@@ -32,7 +36,7 @@ public class Server {
                 thread.start();
             }
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 

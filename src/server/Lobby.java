@@ -51,7 +51,8 @@ public class Lobby implements Runnable {
                     printWriter.println("\n\nGotcha! Let's get this game started!");
                     setTeams();
                     gameHasStarted();
-                    return;
+                    broadcastMessage("Someone typed a secret code! Press enter!");
+                    break;
                 }
                 printWriter.println("Number of participants must be even");
             }
@@ -59,11 +60,15 @@ public class Lobby implements Runnable {
         }
         //Game starts
         while (socket.isConnected()) {
-
-            printWriter.println("\n\nGAME IS ABOUT TO START\n\n");
+            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
+          /*  try {
+                wait(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
             synchronized (game) {
-                printWriter.println("Team 1:\n\n" + game.getTeam1().getPlayersString() + "------------");
-                printWriter.println("Team 2:\n\n" + game.getTeam2().getPlayersString() + "------------");
+                game.printTeams(printWriter);
             }
         }
     }

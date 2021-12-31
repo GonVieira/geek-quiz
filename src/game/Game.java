@@ -2,10 +2,12 @@ package game;
 
 import questions.Questions;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import static Utility.Utility.*;
+import static server.Server.game;
 
 public class Game {
     private Team team1;
@@ -13,9 +15,9 @@ public class Game {
     private static final Questions questions = new Questions();
     private static int round;
 
-    public Game(){
-        this.team1 = null;
-        this.team2 = null;
+    public Game(ArrayList<Player> team1, ArrayList<Player> team2){
+        this.team1 = new Team(team1);
+        this.team2 = new Team(team2);
     }
 
     //Metodo para chamar as fases do jogo
@@ -112,6 +114,17 @@ public class Game {
         }
     }
 
+    public synchronized void printTeams(PrintWriter printWriter){
+        printWriter.println("Team 1:\n\n" + team1.getPlayersString() + "------------");
+            /*  try {
+                wait(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
+        printWriter.println("Team 2:\n\n" + team2.getPlayersString() + "------------");
+    }
+/**SETTERS & GETTERS**/
     public void setTeam1(ArrayList<Player> players) {
         this.team1 = new Team(players);
     }

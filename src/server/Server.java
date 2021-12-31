@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Server {
 
     private final ServerSocket serverSocket;
-    public static final Game game = new Game();
+    public static Game game;
     public static boolean gameStarted = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
     public static ArrayList<Player> team1 = new ArrayList<>();
@@ -22,9 +22,13 @@ public class Server {
         this.serverSocket = serverSocket;
     }
 
-    public static void gameHasStarted() {
-        gameStarted = true;
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(1234);
+        Server server = new Server(serverSocket);
+        System.out.println("Server started.");
+        server.startServer();
     }
+
 
     public void startServer() {
         try {
@@ -40,6 +44,21 @@ public class Server {
         }
     }
 
+    public synchronized static void gameHasStarted() {
+        gameStarted = true;
+    }
+
+    public synchronized static void setTeams(){
+        for (int i = 0; i < lobbies.size(); i++) {
+            if (i % 2 != 0) {
+                team1.add(lobbies.get(i).getPlayer());
+                return;
+            }
+            team2.add(lobbies.get(i).getPlayer());
+        }
+        game = new Game(team1,team2);
+    }
+
     public void closeServerSocket() {
         try {
             if (serverSocket != null) {
@@ -50,23 +69,4 @@ public class Server {
         }
     }
 
-    public static void setTeams(){
-        for (int i = 0; i < lobbies.size(); i++) {
-            if (i % 2 != 0) {
-                team1.add(lobbies.get(i).getPlayer());
-                return;
-            }
-            team2.add(lobbies.get(i).getPlayer());
-        }
-        game.setTeam1(team1);
-        game.setTeam2(team2);
-
-    }
-
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(1234);
-        Server server = new Server(serverSocket);
-        System.out.println("Server started.");
-        server.startServer();
-    }
 }

@@ -50,6 +50,19 @@ public class Server {
         }
     }
 
+    public static void setTeams(){
+        for (int i = 0; i < lobbies.size(); i++) {
+            if (i % 2 != 0) {
+                team1.add(lobbies.get(i).getPlayer());
+                return;
+            }
+            team2.add(lobbies.get(i).getPlayer());
+        }
+        game.setTeam1(team1);
+        game.setTeam2(team2);
+
+    }
+
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(1234);
         Server server = new Server(serverSocket);

@@ -49,7 +49,8 @@ public class Lobby implements Runnable {
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 if (lobbies.size() % 2 == 0) {
                     printWriter.println("\n\nGotcha! Let's get this game started!");
-                    Server.gameHasStarted();
+                    setTeams();
+                    gameHasStarted();
                     return;
                 }
                 printWriter.println("Number of participants must be even");
@@ -57,17 +58,6 @@ public class Lobby implements Runnable {
             broadcastMessage(clientUsername + ": " + messageFromClient);
         }
         //Game starts
-
-        for (int i = 0; i < lobbies.size(); i++) {
-            if (i % 2 != 0) {
-                team1.add(lobbies.get(i).player);
-                return;
-            }
-            team2.add(lobbies.get(i).player);
-        }
-        game.setTeam1(team1);
-        game.setTeam2(team2);
-
         while (socket.isConnected()) {
 
             printWriter.println("\n\nGAME IS ABOUT TO START\n\n");
@@ -106,5 +96,9 @@ public class Lobby implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

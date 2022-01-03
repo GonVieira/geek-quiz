@@ -14,8 +14,6 @@ public class Server {
     public static final Game game = new Game();
     public static boolean gameStarted = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
-    public static ArrayList<Player> team1 = new ArrayList<>();
-    public static ArrayList<Player> team2 = new ArrayList<>();
 
     public Server(ServerSocket serverSocket) {
 

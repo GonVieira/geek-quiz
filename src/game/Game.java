@@ -14,11 +14,6 @@ public class Game {
     private static final Questions questions = new Questions();
     private static int round;
 
-    public Game(ArrayList<Player> team1, ArrayList<Player> team2){
-        this.team1 = new Team(team1);
-        this.team2 = new Team(team2);
-    }
-
     //Metodo para chamar as fases do jogo
     public void gameRounds() {
         while (team1.getFirewalls() > 0 && team2.getFirewalls() > 0) {
@@ -113,8 +108,7 @@ public class Game {
         }
     }
 
-    public void printTeams(PrintWriter printWriter){
-        printWriter.println("HELLO");
+    public synchronized void printTeams(PrintWriter printWriter){
         printWriter.println("Team 1:\n\n" + team1.getPlayersString() + "------------");
             /*  try {
                 wait(5000);

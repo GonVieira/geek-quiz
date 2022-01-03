@@ -4,7 +4,6 @@ import game.Game;
 import game.Player;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 public class Server {
 
     private final ServerSocket serverSocket;
-    public static Game game;
+    public static final Game game = new Game();
     public static boolean gameStarted = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
     public static ArrayList<Player> team1 = new ArrayList<>();
@@ -45,23 +44,15 @@ public class Server {
         }
     }
 
-    public static void printGameTeams(PrintWriter printWriter){
-        game.printTeams(printWriter);
-    }
-
     public synchronized static void gameHasStarted() {
         gameStarted = true;
     }
 
-    public synchronized static void setTeams(){
-        for (int i = 0; i < lobbies.size(); i++) {
-            if (i % 2 != 0) {
-                team1.add(lobbies.get(i).getPlayer());
-                return;
-            }
-            team2.add(lobbies.get(i).getPlayer());
-        }
-        game = new Game(team1,team2);
+    public synchronized static void addPlayerToTeam(Player player){
+        if (lobbies.size() % 2 == 0)
+            game.getTeam1().getPlayers().add(player);
+        else
+            game.getTeam2().getPlayers().add(player);
     }
 
     public void closeServerSocket() {

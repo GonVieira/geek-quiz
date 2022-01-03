@@ -43,10 +43,10 @@ public class Team {
         return players;
     }
 
-    public String getPlayersString(){
-        String result = null;
+    public synchronized String getPlayersString(){
+        String result = "";
         for(Player player : players){
-            result.concat(player.getName() + "\n");
+            result += player.getName() + "\n";
         }
         return result;
     }

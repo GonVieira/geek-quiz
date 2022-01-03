@@ -14,7 +14,6 @@ public class Lobby implements Runnable {
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private String clientUsername;
-    private Player player;
 
 
     public Lobby(Socket socket) {
@@ -28,6 +27,7 @@ public class Lobby implements Runnable {
         }
     }
 
+
     @Override
     public void run() {
         createUsername();
@@ -36,15 +36,16 @@ public class Lobby implements Runnable {
         while (socket.isConnected()) {
             printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
 
-            printGameTeams(printWriter);
+            game.printTeams(printWriter);
         }
     }
 
-    public void createUsername(){
+    public void createUsername() {
         try {
             printWriter.println("Enter your username for the group chat: ");
             this.clientUsername = bufferedReader.readLine();
-            this.player = new Player(clientUsername);
+            Player player = new Player(clientUsername);
+            //addPlayerToTeam(player);
             broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,18 +60,18 @@ public class Lobby implements Runnable {
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, printWriter);
                 break;
-            }if (messageFromClient.equals("")){
-                chatRoom();
             }
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 if (lobbies.size() % 2 == 0) {
                     printWriter.println("\n\nGotcha! Let's get this game started!");
-                    setTeams();
                     gameHasStarted();
                     broadcastMessage("Someone typed a secret code! Press enter!");
-                    break;
+                    return;
                 }
                 printWriter.println("Number of participants must be even");
+            }
+            if (messageFromClient.equals("")) {
+                chatRoom();
             }
             broadcastMessage(clientUsername + ": " + messageFromClient);
         }
@@ -106,7 +107,7 @@ public class Lobby implements Runnable {
         }
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getClientUsername() {
+        return clientUsername;
     }
 }

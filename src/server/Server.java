@@ -17,7 +17,6 @@ public class Server {
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     public Server(ServerSocket serverSocket) {
-
         this.serverSocket = serverSocket;
     }
 
@@ -75,7 +74,7 @@ public class Server {
     public static boolean allLobbiesHavePrintedTeams(){
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.teamsPrinted){
+            if (!lobby.teamsArePrinted()){
                 ready = false;
             }
         }
@@ -85,7 +84,7 @@ public class Server {
     public static boolean allLobbiesHaveAnsweredQuestion(){
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.questionAnswered){
+            if (!lobby.questionIsAnswered()){
                 ready = false;
             }
         }
@@ -95,18 +94,11 @@ public class Server {
     public static boolean allLobbiesHaveSpentPoints(){
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.choiceMade){
+            if (!lobby.choiceIsMade()){
                 ready = false;
             }
         }
         return ready;
-    }
-
-    public static void firewallUpdate(){
-        if (!firewallsUpdated) {
-            game.aftermathPhase();
-            firewallsWereUpdated();
-        }
     }
 
 }

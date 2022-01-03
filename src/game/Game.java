@@ -12,6 +12,7 @@ import java.util.List;
 import static Utility.Utility.*;
 
 public class Game {
+
     private Team team1 = new Team();
     private Team team2 = new Team();
     private static final Questions QUESTIONS = new Questions();
@@ -50,7 +51,6 @@ public class Game {
     public void aftermathPhase() {
         team1.updateFirewalls(team2);
         team2.updateFirewalls(team1);
-        //Utility.printRoundOutcome();
     }
 
 

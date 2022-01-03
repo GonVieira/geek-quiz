@@ -15,9 +15,11 @@ public class Lobby implements Runnable {
     private PrintWriter printWriter;
     private String clientUsername;
     private Player player;
-    boolean teamsPrinted = false;
-    boolean questionAnswered = false;
-    boolean choiceMade = false;
+    static boolean advance = false;
+    private boolean gameMaster = false;
+    private boolean teamsPrinted = false;
+    private boolean questionAnswered = false;
+    private boolean pointsSpent = false;
 
 
     public Lobby(Socket socket) {
@@ -63,6 +65,7 @@ public class Lobby implements Runnable {
                 break;
             }
             if (messageFromClient.contains("#GEEKQUIZ")) {
+                this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {
                     printWriter.println("\n\nGotcha! Let's get this game started!");
                     gameHasStarted();
@@ -74,7 +77,7 @@ public class Lobby implements Runnable {
             if (messageFromClient.equals("")) {
                 chatRoom();
             }
-            broadcastMessage(clientUsername + ": " + messageFromClient);
+            broadcastMessage(this.clientUsername + ": " + messageFromClient);
         }
     }
 
@@ -95,20 +98,31 @@ public class Lobby implements Runnable {
 
     public void geekGame(){
         while (game.getTeam1().getFirewalls() > 0 && game.getTeam2().getFirewalls() > 0) {
-            questionAnswered = false;
             questionPhase();
-            choiceMade = false;
             spendingPhase();
-            resetFirewallBoolean();
-            firewallUpdate();
+            if (this.gameMaster) {
+                game.aftermathPhase();
+                advance = true;
+            }else {
+                while (!advance){
+                    printWriter.println("\n\nNot all players are ready! Please wait a sec and press Enter:\n\n");
+                    try {
+                        bufferedReader.readLine();
+                    } catch (IOException e) {
+                        closeEverything(socket, bufferedReader, printWriter);
+                        break;
+                    }
+                }
+            }
             resolutionPhase();
+            this.questionAnswered = false;
+            this.pointsSpent = false;
             printWriter.println("Press Enter to continue");
             try {
                 bufferedReader.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -130,7 +144,7 @@ public class Lobby implements Runnable {
 
     public void spendingPhase() {
         game.spendingPhase(player, bufferedReader, printWriter);
-        choiceMade = true;
+        pointsSpent = true;
         while (!allLobbiesHaveSpentPoints()) {
             printWriter.println("\n\nNot all players have used their points! Please wait a sec and press Enter:\n\n");
             try {
@@ -180,4 +194,18 @@ public class Lobby implements Runnable {
     public String getClientUsername() {
         return clientUsername;
     }
+
+    public boolean teamsArePrinted() {
+        return teamsPrinted;
+    }
+
+    public boolean choiceIsMade() {
+        return pointsSpent;
+    }
+
+    public boolean questionIsAnswered() {
+        return questionAnswered;
+    }
+
+
 }

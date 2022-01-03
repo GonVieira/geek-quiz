@@ -13,6 +13,7 @@ public class Server {
     private final ServerSocket serverSocket;
     public static final Game game = new Game();
     public static boolean gameStarted = false;
+    public static boolean firewallsUpdated = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     public Server(ServerSocket serverSocket) {
@@ -46,6 +47,14 @@ public class Server {
         gameStarted = true;
     }
 
+    public synchronized static void firewallsWereUpdated(){
+        firewallsUpdated = true;
+    }
+
+    public synchronized static void resetFirewallBoolean(){
+        firewallsUpdated = false;
+    }
+
     public synchronized static void addPlayerToTeam(Player player){
         if (lobbies.size() % 2 != 0)
             game.getTeam1().getPlayers().add(player);
@@ -60,6 +69,43 @@ public class Server {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static boolean allLobbiesHavePrintedTeams(){
+        boolean ready = true;
+        for (Lobby lobby : lobbies) {
+            if (!lobby.teamsPrinted){
+                ready = false;
+            }
+        }
+        return ready;
+    }
+
+    public static boolean allLobbiesHaveAnsweredQuestion(){
+        boolean ready = true;
+        for (Lobby lobby : lobbies) {
+            if (!lobby.questionAnswered){
+                ready = false;
+            }
+        }
+        return ready;
+    }
+
+    public static boolean allLobbiesHaveSpentPoints(){
+        boolean ready = true;
+        for (Lobby lobby : lobbies) {
+            if (!lobby.choiceMade){
+                ready = false;
+            }
+        }
+        return ready;
+    }
+
+    public static void firewallUpdate(){
+        if (!firewallsUpdated) {
+            game.aftermathPhase();
+            firewallsWereUpdated();
         }
     }
 

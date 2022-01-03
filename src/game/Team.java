@@ -38,15 +38,29 @@ public class Team {
         return viruses;
     }
 
+    public int getAntivirus() {
+        return antivirus;
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public synchronized String getPlayersString(){
+    public synchronized String getPlayersString() {
         String result = "";
-        for(Player player : players){
+        for (Player player : players) {
             result += player.getName() + "\n";
         }
         return result;
+    }
+
+    public boolean containsPlayer(Player player) {
+       boolean check = false;
+        for (Player listPlayer : players) {
+            if (player.getName().equals(listPlayer.getName())){
+                check = true;
+            }
+        }
+        return check;
     }
 }

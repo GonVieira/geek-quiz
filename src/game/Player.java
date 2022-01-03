@@ -1,5 +1,7 @@
 package game;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -16,11 +18,12 @@ public class Player {
         this.name = name;
     }
 
-    public void receiveQuestion(String question, int correctAnswer) {
-        //print String
+    public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter) {
         saveQuestion(question);
-        String choice = checkIfValidInput(1, 4);
-        checkIfIsCorrect(Integer.parseInt(choice), correctAnswer);
+        printWriter.println("GET THE QUESTION RIGHT FOR 1 POINT!\n\n");
+        printWriter.println(question);
+        String choice = checkIfValidInput(1, 4, bufferedReader);
+        checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }
 
     public void saveQuestion(String question) {
@@ -32,16 +35,16 @@ public class Player {
         return answeredQuestions.contains(question);
     }
 
-    public void checkIfIsCorrect(int answer, Integer correctAnswer) {
+    public void checkIfIsCorrect(int answer, Integer correctAnswer, PrintWriter printWriter) {
 
         if (answer == correctAnswer) {
-            System.out.println("Correct answer.");
+            printWriter.println("Correct answer.");
             score++;
-            System.out.println("Now your score is: " + score);
+            printWriter.println("Now your score is: " + score);
 
         } else {
-            System.out.println("Incorrect answer.");
-            System.out.println("Score: " + score);
+            printWriter.println("Incorrect answer.");
+            printWriter.println("Score: " + score);
         }
     }
 

@@ -68,6 +68,9 @@ public class Lobby implements Runnable {
                 this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {
                     printWriter.println("\n\nGotcha! Let's get this game started!");
+                    game.getTeam1().setFirewalls(8 * game.getTeam1().getPlayers().size());
+                    game.getTeam2().setFirewalls(8 * game.getTeam2().getPlayers().size());
+
                     gameHasStarted();
                     broadcastMessage("Someone typed a secret code! Press enter!");
                     return;

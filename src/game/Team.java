@@ -63,4 +63,9 @@ public class Team {
         }
         return check;
     }
+
+    public void setFirewalls(int firewalls) {
+        this.firewalls = firewalls;
+    }
+
 }

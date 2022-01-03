@@ -49,7 +49,7 @@ public class Server {
     }
 
     public synchronized static void addPlayerToTeam(Player player){
-        if (lobbies.size() % 2 == 0)
+        if (lobbies.size() % 2 != 0)
             game.getTeam1().getPlayers().add(player);
         else
             game.getTeam2().getPlayers().add(player);

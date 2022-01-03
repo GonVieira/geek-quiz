@@ -7,7 +7,6 @@ import static Utility.Utility.*;
 
 public class Player {
 
-    private Socket socket;
     private final String name;
     private int score = 0;
     private final ArrayList<String> answeredQuestions = new ArrayList<>();

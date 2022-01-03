@@ -9,8 +9,8 @@ import java.util.List;
 import static Utility.Utility.*;
 
 public class Game {
-    private Team team1;
-    private Team team2;
+    private Team team1 = new Team();
+    private Team team2 = new Team();
     private static final Questions questions = new Questions();
     private static int round;
 
@@ -110,22 +110,15 @@ public class Game {
 
     public synchronized void printTeams(PrintWriter printWriter){
         printWriter.println("Team 1:\n\n" + team1.getPlayersString() + "------------");
-            /*  try {
+             try {
                 wait(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            */
+
         printWriter.println("Team 2:\n\n" + team2.getPlayersString() + "------------");
     }
 /**SETTERS & GETTERS**/
-    public void setTeam1(ArrayList<Player> players) {
-        this.team1 = new Team(players);
-    }
-
-    public void setTeam2(ArrayList<Player> players) {
-        this.team2 = new Team(players);
-    }
 
     public Team getTeam1() {
         return team1;

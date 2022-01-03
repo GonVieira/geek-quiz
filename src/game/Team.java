@@ -6,11 +6,10 @@ public class Team {
     private int firewalls;  //HP
     private int viruses;    //Attack
     private int antivirus;  //Defense
-    private final ArrayList<Player> players;
+    private final ArrayList<Player> players = new ArrayList<>();
 
-    public Team(ArrayList<Player> players) {
-        this.players = players;
-        this.firewalls = 5 * players.size();
+    public Team() {
+        this.firewalls = 15;
         this.viruses = 0;
         this.antivirus = 0;
     }

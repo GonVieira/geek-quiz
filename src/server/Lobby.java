@@ -45,7 +45,7 @@ public class Lobby implements Runnable {
             printWriter.println("Enter your username for the group chat: ");
             this.clientUsername = bufferedReader.readLine();
             Player player = new Player(clientUsername);
-            //addPlayerToTeam(player);
+            addPlayerToTeam(player);
             broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
         } catch (IOException e) {
             e.printStackTrace();

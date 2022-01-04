@@ -1,11 +1,13 @@
 package server;
 
 import game.Player;
+import music.Music;
 
 import java.io.*;
 import java.net.Socket;
 
 import static server.Server.*;
+import static music.Music.*;
 
 
 public class Lobby implements Runnable {
@@ -20,6 +22,7 @@ public class Lobby implements Runnable {
     private boolean teamsPrinted = false;
     private boolean questionAnswered = false;
     private boolean pointsSpent = false;
+    private static final String MUSICPATH = "/Users/nunolima/Documents/Output_1-2.wav";
 
 
     public Lobby(Socket socket) {
@@ -99,15 +102,17 @@ public class Lobby implements Runnable {
         }
     }
 
-    public void geekGame(){
+    public void geekGame() {
+        if (gameMaster)
+            playMusic(MUSICPATH);
         while (game.getTeam1().getFirewalls() > 0 && game.getTeam2().getFirewalls() > 0) {
             questionPhase();
             spendingPhase();
             if (this.gameMaster) {
                 game.aftermathPhase();
                 advance = true;
-            }else {
-                while (!advance){
+            } else {
+                while (!advance) {
                     printWriter.println("\n\nNot all players are ready! Please wait a sec and press Enter:\n\n");
                     try {
                         bufferedReader.readLine();
@@ -159,7 +164,7 @@ public class Lobby implements Runnable {
         }
     }
 
-    public void resolutionPhase(){
+    public void resolutionPhase() {
         game.printTeamStats(printWriter);
 
     }

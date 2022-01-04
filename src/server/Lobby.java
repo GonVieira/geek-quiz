@@ -2,6 +2,7 @@ package server;
 
 import game.Player;
 import music.Music;
+import utility.Utility;
 
 import java.io.*;
 import java.net.Socket;
@@ -89,6 +90,7 @@ public class Lobby implements Runnable {
 
     public void printTeams() {
         while (!allLobbiesHavePrintedTeams()) {
+            Utility.printGameName(printWriter);
             printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
             game.printTeamMembers(printWriter);
             teamsPrinted = true;
@@ -214,6 +216,5 @@ public class Lobby implements Runnable {
     public boolean questionIsAnswered() {
         return questionAnswered;
     }
-
 
 }

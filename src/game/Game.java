@@ -14,51 +14,19 @@ public class Game {
     private Team team1 = new Team();
     private Team team2 = new Team();
     private static final Questions QUESTIONS = new Questions();
-    private static int round;
 
-    //Metodo para chamar as fases do jogo
-   /* public void gameRounds() {
-        while (team1.getFirewalls() > 0 && team2.getFirewalls() > 0) {
-            System.out.println("ROUND" + round); //BufferedWriter
-         //   questionPhase();
-            spendPhase();
-            aftermathPhase();
-            round++;
-        }
-        if (team1.getFirewalls() <= 0) {
-            System.out.println("TEAM 2 WON");
-        } else {
-            System.out.println("TEAM 1 WON");
-        }
-    }
 
-    //Mandar as peguntas a cada jogador de cada equipa
-   public void questionPhase() {
-        System.out.println("QUESTION PHASE");
-        distributeQuestions(team1);
-        distributeQuestions(team2);
-    }
-
-    //Cada jogador decide o que faz com os pontos
-    public void spendPhase() {
-        spendingPhase(team1);
-        spendingPhase(team2);
-    }
-*/
-    //Pancada velha
+    //FIGHT PHASE
     public void aftermathPhase() {
         team1.updateFirewalls(team2);
         team2.updateFirewalls(team1);
     }
 
 
-    //metodo para distribuir as perguntas por cada jogador da equipa
+    //METHOD TO DISTRIBUTE THE QUESTIONS FOR EACH PLAYER
     public void distributeQuestions(Player player, BufferedReader bufferedReader, PrintWriter printWriter) {
         List<String> keysAsArray = new ArrayList<>(QUESTIONS.getQuestions().keySet());
-
-
         String question = keysAsArray.get((int) (Math.random() * keysAsArray.size()));
-
         while (player.questionAnswered(question)) {
             question = keysAsArray.get((int) (Math.random() * keysAsArray.size()));
         }
@@ -67,10 +35,9 @@ public class Game {
     }
 
 
-    //metodo para perguntar a cada jogador o que quer fazer com os pontos
+    //SPENDING PHASE
     public void spendingPhase(Player player, BufferedReader bufferedReader, PrintWriter printWriter) {
         if (player.getScore() > 0) {
-
             printWriter.println("\n\n\nPlayer Score: " + player.getScore());
             printWriter.println("Choose one of the following options:");
             printWriter.println("1)SPEND POINTS              2)PASS");

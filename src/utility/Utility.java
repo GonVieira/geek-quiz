@@ -2,6 +2,7 @@ package utility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Utility {
@@ -27,5 +28,17 @@ public class Utility {
             }
         }
         return choice;
+    }
+
+    public static void printGameName(PrintWriter printWriter) {
+        printWriter.println("\n" +
+                "   _____ ______ ______ _  __      ____  _    _ _____ ______\n" +
+                "  / ____|  ____|  ____| |/ /     / __ \\| |  | |_   _|___  /\n" +
+                " | |  __| |__  | |__  | ' /_____| |  | | |  | | | |    / / \n" +
+                " | | |_ |  __| |  __| |  <______| |  | | |  | | | |   / /  \n" +
+                " | |__| | |____| |____| . \\     | |__| | |__| |_| |_ / /__ \n" +
+                "  \\_____|______|______|_|\\_\\     \\___\\_\\\\____/|_____/_____|\n" +
+                "                                                           \n" +
+                "                                                           \n");
     }
 }

@@ -81,10 +81,9 @@ public class Lobby implements Runnable {
                 }
                 printWriter.println("Number of participants must be even");
             }
-            if (messageFromClient.equals("")) {
-                chatRoom();
-            }
+            if (!messageFromClient.equals("")) {
             broadcastMessage(this.clientUsername + ": " + messageFromClient);
+            }
         }
     }
 

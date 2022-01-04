@@ -19,8 +19,8 @@ public class Player {
 
     public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter) {
         saveQuestion(question);
-        printWriter.println("GET THE QUESTION RIGHT FOR 1 POINT!\n\n");
-        printWriter.println(question);
+        printWriter.println("\n\nGET THE QUESTION RIGHT FOR 1 POINT!\n\n");
+        printWriter.println(ANSI_BLUE + question + ANSI_RESET);
         String choice = checkIfValidInput(1, 4, bufferedReader, printWriter);
         checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }
@@ -37,12 +37,12 @@ public class Player {
     public void checkIfIsCorrect(int answer, Integer correctAnswer, PrintWriter printWriter) {
 
         if (answer == correctAnswer) {
-            printWriter.println("Correct answer.");
+            printWriter.println(ANSI_GREEN + "Correct answer." + ANSI_RESET);
             score++;
             printWriter.println("Now your score is: " + score);
 
         } else {
-            printWriter.println("Incorrect answer.");
+            printWriter.println(ANSI_RED + "Incorrect answer." + ANSI_RESET);
             printWriter.println("Score: " + score);
         }
     }

@@ -9,14 +9,14 @@ import java.net.Socket;
 
 import static server.Server.*;
 import static music.Music.*;
-
+import static utility.Utility.*;
 
 public class Lobby implements Runnable {
 
     private Socket socket;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
-    private String clientUsername;
+    private String clientUsername = "";
     private Player player;
     static boolean advance = false;
     private boolean gameMaster = false;
@@ -24,7 +24,7 @@ public class Lobby implements Runnable {
     private boolean questionAnswered = false;
     private boolean pointsSpent = false;
     private boolean resolutionChecked = false;
-    private static final String MUSICPATH = "/Users/nunolima/Documents/Output_1-2.wav";
+    private static final String MUSICPATH = "src/music/Output_1-2.wav";
 
 
     public Lobby(Socket socket) {
@@ -51,7 +51,15 @@ public class Lobby implements Runnable {
     public void createUsername() {
         try {
             printWriter.println("Enter your username for the group chat: ");
-            this.clientUsername = bufferedReader.readLine();
+            String name = bufferedReader.readLine();
+            for (Lobby lobby : lobbies) {
+                while (lobby.clientUsername.equals(name)) {
+                    printWriter.println("That name is already taken!");
+                    printWriter.println("Enter your username for the group chat: ");
+                    name = bufferedReader.readLine();
+                }
+            }
+            clientUsername = name;
             player = new Player(clientUsername);
             addPlayerToTeam(player);
             broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
@@ -77,13 +85,13 @@ public class Lobby implements Runnable {
                     game.getTeam2().setFirewalls(8 * game.getTeam2().getPlayers().size());
 
                     gameHasStarted();
-                    broadcastMessage("Someone typed a secret code! Press enter!");
+                    broadcastMessage(ANSI_YELLOW + "Someone typed a secret code! Press enter!" + ANSI_RESET);
                     return;
                 }
                 printWriter.println("Number of participants must be even");
             }
             if (!messageFromClient.equals("")) {
-                broadcastMessage(this.clientUsername + ": " + messageFromClient);
+                broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
             }
         }
     }
@@ -105,8 +113,10 @@ public class Lobby implements Runnable {
     }
 
     public void geekGame() {
-        //if (gameMaster)
-        // playMusic(MUSICPATH);
+        if (gameMaster){
+         playMusic(MUSICPATH);
+         resetGameStarted();
+        }
         while (game.getTeam1().getFirewalls() > 0 && game.getTeam2().getFirewalls() > 0) {
             advance = false;
             questionPhase();
@@ -131,7 +141,7 @@ public class Lobby implements Runnable {
             this.questionAnswered = false;
             pressEnterToContinue();
         }
-            checkIfSomeoneWon();
+        checkIfSomeoneWon();
     }
 
     public void questionPhase() {
@@ -196,7 +206,7 @@ public class Lobby implements Runnable {
 
     }
 
-    public void checkIfSomeoneWon(){
+    public void checkIfSomeoneWon() {
         if (game.getTeam1().getFirewalls() <= 0) {
             printWriter.println("\n\nTEAM 2 WINS! CONGRATS!\nRETURNING TO CHAT...");
             pressEnterToContinue();

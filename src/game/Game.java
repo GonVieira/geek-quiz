@@ -54,7 +54,7 @@ public class Game {
                     String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter);
                     if (team1.containsPlayer(player)) {
                         team1.addVirus(Integer.parseInt(quantity));
-                    }else {
+                    } else {
                         team2.addVirus(Integer.parseInt(quantity));
                     }
                     int scoreLeft = player.getScore() - Integer.parseInt(quantity);
@@ -65,7 +65,7 @@ public class Game {
                     String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter);
                     if (team1.containsPlayer(player)) {
                         team1.addAntivirus(Integer.parseInt(quantity));
-                    }else {
+                    } else {
                         team2.addAntivirus(Integer.parseInt(quantity));
                     }
                     int scoreLeft = player.getScore() - Integer.parseInt(quantity);
@@ -85,30 +85,31 @@ public class Game {
         printWriter.println("Team 2:\n\n" + team2.getPlayersString() + "------------");
     }
 
-    public void printTeamStats(PrintWriter printWriter){
+    public void printTeamStats(PrintWriter printWriter) {
         String result1 = "";
         for (Player player : team1.getPlayers()) {
             result1 += player.getName() + " / ";
         }
         String result2 = "";
         for (Player player : team2.getPlayers()) {
-            result2 += player.getName() + " / " ;
+            result2 += player.getName() + " / ";
         }
 
         printWriter.println("RESOLUTION:\n");
         printWriter.println("Team 1: " + result1);
-        printWriter.println("Firewalls: " + team1.getFirewalls() );
+        printWriter.println("Firewalls: " + team1.getFirewalls());
         printWriter.println("Virus: " + team1.getViruses());
         printWriter.println("Antivirus: " + team1.getAntivirus());
         printWriter.println("----------------------------");
 
         printWriter.println("RESOLUTION:\n");
         printWriter.println("Team 2: " + result2);
-        printWriter.println("Firewalls: " + team2.getFirewalls() );
+        printWriter.println("Firewalls: " + team2.getFirewalls());
         printWriter.println("Virus: " + team2.getViruses());
         printWriter.println("Antivirus: " + team2.getAntivirus());
         printWriter.println("----------------------------");
     }
+
     /**
      * SETTERS & GETTERS
      **/

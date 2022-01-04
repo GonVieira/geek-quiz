@@ -46,6 +46,11 @@ public class Server {
         gameStarted = true;
     }
 
+    public synchronized static void resetGameStarted() {
+        gameStarted = false;
+    }
+
+
     public synchronized static void firewallsWereUpdated(){
         firewallsUpdated = true;
     }

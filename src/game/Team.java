@@ -9,7 +9,6 @@ public class Team {
     private final ArrayList<Player> players = new ArrayList<>();
 
     public Team() {
-        this.firewalls = 15;
         this.viruses = 0;
         this.antivirus = 0;
     }

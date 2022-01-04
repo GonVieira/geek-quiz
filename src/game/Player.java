@@ -2,10 +2,9 @@ package game;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 
-import static Utility.Utility.*;
+import static utility.Utility.*;
 
 public class Player {
 

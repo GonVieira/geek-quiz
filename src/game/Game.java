@@ -3,13 +3,11 @@ package game;
 import questions.Questions;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.spi.FileSystemProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Utility.Utility.*;
+import static utility.Utility.*;
 
 public class Game {
 

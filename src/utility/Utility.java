@@ -1,12 +1,10 @@
-package Utility;
+package utility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Utility {
-
-    private static final Scanner sc = new Scanner(System.in);
 
     public static String checkIfValidInput(Integer minimumAcceptable, Integer maximumAcceptable, BufferedReader bufferedReader) {
         String choice = null;

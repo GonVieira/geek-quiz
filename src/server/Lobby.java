@@ -23,6 +23,7 @@ public class Lobby implements Runnable {
     private boolean teamsPrinted = false;
     private boolean questionAnswered = false;
     private boolean pointsSpent = false;
+    private boolean resolutionChecked = false;
     private static final String MUSICPATH = "/Users/nunolima/Documents/Output_1-2.wav";
 
 
@@ -82,7 +83,7 @@ public class Lobby implements Runnable {
                 printWriter.println("Number of participants must be even");
             }
             if (!messageFromClient.equals("")) {
-            broadcastMessage(this.clientUsername + ": " + messageFromClient);
+                broadcastMessage(this.clientUsername + ": " + messageFromClient);
             }
         }
     }
@@ -104,10 +105,13 @@ public class Lobby implements Runnable {
     }
 
     public void geekGame() {
-        if (gameMaster)
-            playMusic(MUSICPATH);
+        //if (gameMaster)
+        // playMusic(MUSICPATH);
         while (game.getTeam1().getFirewalls() > 0 && game.getTeam2().getFirewalls() > 0) {
+            advance = false;
             questionPhase();
+            this.pointsSpent = false;
+            resolutionChecked = false;
             spendingPhase();
             if (this.gameMaster) {
                 game.aftermathPhase();
@@ -125,14 +129,9 @@ public class Lobby implements Runnable {
             }
             resolutionPhase();
             this.questionAnswered = false;
-            this.pointsSpent = false;
-            printWriter.println("Press Enter to continue");
-            try {
-                bufferedReader.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            pressEnterToContinue();
         }
+            checkIfSomeoneWon();
     }
 
     public void questionPhase() {
@@ -167,7 +166,16 @@ public class Lobby implements Runnable {
 
     public void resolutionPhase() {
         game.printTeamStats(printWriter);
-
+        resolutionChecked = true;
+        while (!allLobbiesHaveCheckedResolution()) {
+            printWriter.println("\n\nNot all players have seen the resolution! Please wait a sec and press Enter:\n\n");
+            try {
+                bufferedReader.readLine();
+            } catch (IOException e) {
+                closeEverything(socket, bufferedReader, printWriter);
+                break;
+            }
+        }
     }
 
     public void broadcastMessage(String messageToSend) {
@@ -175,6 +183,28 @@ public class Lobby implements Runnable {
             if (!lobby.clientUsername.equals(clientUsername)) {
                 lobby.printWriter.println(messageToSend);
             }
+        }
+    }
+
+    public void pressEnterToContinue() {
+        printWriter.println("\nPress Enter to continue");
+        try {
+            bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void checkIfSomeoneWon(){
+        if (game.getTeam1().getFirewalls() <= 0) {
+            printWriter.println("\n\nTEAM 2 WINS! CONGRATS!\nRETURNING TO CHAT...");
+            pressEnterToContinue();
+            chatRoom();
+        } else {
+            printWriter.println("\n\nTEAM 1 WINS! CONGRATS!\nRETURNING TO CHAT...");
+            pressEnterToContinue();
+            chatRoom();
         }
     }
 
@@ -200,10 +230,6 @@ public class Lobby implements Runnable {
         }
     }
 
-    public String getClientUsername() {
-        return clientUsername;
-    }
-
     public boolean teamsArePrinted() {
         return teamsPrinted;
     }
@@ -216,4 +242,7 @@ public class Lobby implements Runnable {
         return questionAnswered;
     }
 
+    public boolean resolutionIsChecked() {
+        return resolutionChecked;
+    }
 }

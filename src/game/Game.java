@@ -41,17 +41,17 @@ public class Game {
             printWriter.println("\n\n\nPlayer Score: " + player.getScore());
             printWriter.println("Choose one of the following options:");
             printWriter.println("1)SPEND POINTS              2)PASS");
-            String option1 = checkIfValidInput(1, 2, bufferedReader);
+            String option1 = checkIfValidInput(1, 2, bufferedReader, printWriter);
 
             if (option1.equals("1")) {
                 printWriter.println("Choose one of the following options:");
                 printWriter.println("1)VIRUS(ATK)            2)ANTI-VIRUS(DEF)");
-                String option2 = checkIfValidInput(1, 2, bufferedReader);
+                String option2 = checkIfValidInput(1, 2, bufferedReader, printWriter);
 
                 if (option2.equals("1")) {
                     printWriter.println("Score: " + player.getScore());
                     printWriter.println("How many points do you want to spend?");
-                    String quantity = checkIfValidInput(1, player.getScore(), bufferedReader);
+                    String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter);
                     if (team1.containsPlayer(player)) {
                         team1.addVirus(Integer.parseInt(quantity));
                     }else {
@@ -62,7 +62,7 @@ public class Game {
                 } else {
                     printWriter.println("Score: " + player.getScore());
                     printWriter.println("How many points do you want to spend?");
-                    String quantity = checkIfValidInput(1, player.getScore(), bufferedReader);
+                    String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter);
                     if (team1.containsPlayer(player)) {
                         team1.addAntivirus(Integer.parseInt(quantity));
                     }else {

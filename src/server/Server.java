@@ -101,4 +101,13 @@ public class Server {
         return ready;
     }
 
+    public static boolean allLobbiesHaveCheckedResolution(){
+        boolean ready = true;
+        for (Lobby lobby : lobbies) {
+            if (!lobby.resolutionIsChecked()){
+                ready = false;
+            }
+        }
+        return ready;
+    }
 }

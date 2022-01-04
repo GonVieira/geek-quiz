@@ -21,7 +21,7 @@ public class Player {
         saveQuestion(question);
         printWriter.println("GET THE QUESTION RIGHT FOR 1 POINT!\n\n");
         printWriter.println(question);
-        String choice = checkIfValidInput(1, 4, bufferedReader);
+        String choice = checkIfValidInput(1, 4, bufferedReader, printWriter);
         checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }
 

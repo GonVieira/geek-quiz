@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Utility {
 
-    public static String checkIfValidInput(Integer minimumAcceptable, Integer maximumAcceptable, BufferedReader bufferedReader) {
+    public static String checkIfValidInput(Integer minimumAcceptable, Integer maximumAcceptable, BufferedReader bufferedReader, PrintWriter printWriter) {
         String choice = null;
         boolean invalid = true;
         while (invalid) {
@@ -20,11 +20,11 @@ public class Utility {
                 if (Integer.parseInt(choice) >= minimumAcceptable && Integer.parseInt(choice) <= maximumAcceptable) {
                     invalid = false;
                 }else {
-                    System.out.println("\nInvalid Input. Try again:");
+                    printWriter.println("\nInvalid Input. Try again:");
 
                 }
             } else {
-                System.out.println("\nInvalid Input. Try again:");
+                printWriter.println("\nInvalid Input. Try again:");
             }
         }
         return choice;

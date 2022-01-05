@@ -2,6 +2,7 @@ package server;
 
 import game.Game;
 import game.Player;
+import utility.Messages;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,9 +21,9 @@ public class Server {
     }
 
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(1234);
+        ServerSocket serverSocket = new ServerSocket(8080);
         Server server = new Server(serverSocket);
-        System.out.println("Server started.");
+        System.out.println(Messages.SERVER_ON);
         server.startServer();
     }
 
@@ -31,7 +32,7 @@ public class Server {
         try {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
-                System.out.println("A new client has connected: " + socket.getInetAddress().getHostAddress());
+                System.out.println(Messages.CLIENT_CONNECT + socket.getInetAddress().getHostAddress());
                 Lobby lobby = new Lobby(socket);
                 Thread thread = new Thread(lobby);
                 thread.start();

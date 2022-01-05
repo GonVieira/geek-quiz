@@ -1,6 +1,7 @@
 package server;
 
 import game.Player;
+import utility.Messages;
 import utility.Utility;
 
 import java.io.*;
@@ -42,6 +43,7 @@ public class Lobby implements Runnable {
     public void run() {
         createUsername();
         while (socket.isConnected()) {
+            //Chat:
             chatRoom();
             //Game starts
             printTeams();
@@ -52,26 +54,24 @@ public class Lobby implements Runnable {
 
     public void createUsername() {
         try {
-            printWriter.println("Enter your username for the group chat: ");
+            printWriter.println(Messages.USERNAME_REQUEST);
             String name = bufferedReader.readLine();
             for (Lobby lobby : lobbies) {
                 while (lobby.clientUsername.equals(name)) {
-                    printWriter.println("That name is already taken!");
-                    printWriter.println("Enter your username for the group chat: ");
+                    printWriter.println(Messages.NAME_IN_USED + Messages.USERNAME_REQUEST);
                     name = bufferedReader.readLine();
                 }
             }
             clientUsername = name;
             player = new Player(clientUsername);
             addPlayerToTeam(player);
-            broadcastMessage(ANSI_BLUE + "SERVER: " + ANSI_GREEN + clientUsername + ANSI_RESET + " has entered the chat!");
+            broadcastMessage(Messages.ANSI_BLUE + "SERVER: " + Messages.ANSI_GREEN + clientUsername + Messages.ANSI_RESET + " has entered the chat!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void chatRoom() {
-        printWriter.println("\n\n" + ANSI_YELLOW + "WELCOME TO THE CHATROOM!" + ANSI_RESET);
         String messageFromClient;
         while (!gameStarted) {
             try {
@@ -83,18 +83,18 @@ public class Lobby implements Runnable {
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {
-                    printWriter.println("\n\nGotcha! Let's get this game started!");
+                    printWriter.println(Messages.KEY_USED);
                     game.getTeam1().setFirewalls(8 * game.getTeam1().getPlayers().size());
                     game.getTeam2().setFirewalls(8 * game.getTeam2().getPlayers().size());
 
                     gameHasStarted();
-                    broadcastMessage(ANSI_YELLOW + "Someone typed a secret code! Press enter!" + ANSI_RESET);
+                    broadcastMessage(Messages.KEY_USED_NOTIFICATION);
                     return;
                 }
-                printWriter.println("Number of participants must be even");
+                printWriter.println(Messages.VALIDATE_NUMBER_PLAYERS);
             }
             if (!messageFromClient.equals("")) {
-                broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
+                broadcastMessage(Messages.ANSI_GREEN + this.clientUsername + Messages.ANSI_RESET + ": " + messageFromClient);
             }
         }
     }
@@ -102,10 +102,10 @@ public class Lobby implements Runnable {
     public void printTeams() {
         while (!allLobbiesHavePrintedTeams()) {
             Utility.printGameName(printWriter);
-            printWriter.println("\n\nGAME IS ABOUT TO START\nDividing players in 2 teams...\n\n");
+            printWriter.println(Messages.TEAM_CREATION);
             game.printTeamMembers(printWriter);
             teamsPrinted = true;
-            printWriter.println("Press Enter to continue:\n\n");
+            printWriter.println(Messages.ENTER);
             try {
                 bufferedReader.readLine();
             } catch (IOException e) {
@@ -123,25 +123,15 @@ public class Lobby implements Runnable {
         while (lobbies.size() % 2 == 0 && game.bothTeamsareStillAlive()) {
             advance = false;
             questionPhase();
-            if (lobbies.size() % 2 != 0){
-                return;
-            }
             this.pointsSpent = false;
             resolutionChecked = false;
-
             spendingPhase();
-            if (lobbies.size() % 2 != 0){
-                return;
-            }
             if (this.gameMaster) {
                 game.aftermathPhase();
                 advance = true;
-                if (lobbies.size() % 2 != 0){
-                    return;
-                }
             } else {
                 while (!advance) {
-                    printWriter.println("\n\nNot all players are ready! Please wait a sec and press Enter:\n\n");
+                    printWriter.println(Messages.PLAYER_NOT_READY);
                     try {
                         bufferedReader.readLine();
                     } catch (IOException e) {
@@ -151,9 +141,6 @@ public class Lobby implements Runnable {
                 }
             }
             resolutionPhase();
-            if (lobbies.size() % 2 != 0){
-                return;
-            }
             this.questionAnswered = false;
             pressEnterToContinue();
         }
@@ -161,20 +148,11 @@ public class Lobby implements Runnable {
 
     public void questionPhase() {
         game.distributeQuestions(player, bufferedReader, printWriter, this);
-        if (lobbies.size() % 2 != 0){
-            return;
-        }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
-        if (lobbies.size() % 2 != 0){
-            return;
-        }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
-        if (lobbies.size() % 2 != 0){
-            return;
-        }
         questionAnswered = true;
         while (!allLobbiesHaveAnsweredQuestion()) {
-            printWriter.println("\n\nNot all players have answered! Please wait a sec and press Enter:\n\n");
+            printWriter.println(Messages.PLAYER_NOT_ANSWER);
             try {
                 bufferedReader.readLine();
             } catch (IOException e) {
@@ -188,7 +166,7 @@ public class Lobby implements Runnable {
         game.spendingPhase(player, bufferedReader, printWriter, this);
         pointsSpent = true;
         while (!allLobbiesHaveSpentPoints()) {
-            printWriter.println("\n\nNot all players have used their points! Please wait a sec and press Enter:\n\n");
+            printWriter.println(Messages.PLAYER_NOT_SPEND_POINTS);
             try {
                 bufferedReader.readLine();
             } catch (IOException e) {
@@ -202,7 +180,7 @@ public class Lobby implements Runnable {
         game.printTeamStats(printWriter);
         resolutionChecked = true;
         while (!allLobbiesHaveCheckedResolution()) {
-            printWriter.println("\n\nNot all players have seen the resolution! Please wait a sec and press Enter:\n\n");
+            printWriter.println(Messages.PLAYER_WAIT_RESOLUTION);
             try {
                 bufferedReader.readLine();
             } catch (IOException e) {
@@ -215,13 +193,17 @@ public class Lobby implements Runnable {
     public void broadcastMessage(String messageToSend) {
         for (Lobby lobby : lobbies) {
             if (!lobby.clientUsername.equals(clientUsername)) {
+               /* if (messageToSend.contains("Game will be interrupted.")){
+                    pressEnterToContinue();
+                    lobby.chatRoom();
+                }*/
                 lobby.printWriter.println(messageToSend);
             }
         }
     }
 
     public void pressEnterToContinue() {
-        printWriter.println("\nPress Enter to continue");
+        printWriter.println(Messages.ENTER);
         try {
             bufferedReader.readLine();
         } catch (IOException e) {
@@ -231,13 +213,12 @@ public class Lobby implements Runnable {
     }
 
     public void checkIfSomeoneWon() {
-        printWriter.println("HELLO");
         if (game.getTeam1().getFirewalls() <= 0) {
-            printWriter.println("\n\nTEAM 2 WINS! CONGRATS!\nRETURNING TO CHAT...");
+            printWriter.println(Messages.TEAM2_WIN);
             pressEnterToContinue();
             chatRoom();
-        } else if (game.getTeam2().getFirewalls() <= 0){
-            printWriter.println("\n\nTEAM 1 WINS! CONGRATS!\nRETURNING TO CHAT...");
+        } else {
+            printWriter.println(Messages.TEAM1_WIN);
             pressEnterToContinue();
             chatRoom();
         }
@@ -245,7 +226,7 @@ public class Lobby implements Runnable {
 
     public void removeClient() {
         lobbies.remove(this);
-        broadcastMessage("SERVER: " + clientUsername + " has left the chat!");
+        broadcastMessage(Messages.ANSI_BLUE + "SERVER: " + Messages.ANSI_GREEN + clientUsername + Messages.ANSI_RESET + " has left the chat!");
     }
 
     public void closeEverything(Socket socket, BufferedReader bufferedReader, PrintWriter printWriter) {
@@ -285,13 +266,4 @@ public class Lobby implements Runnable {
         return clientUsername;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void checkIfSomeoneLeft(){
-        if (lobbies.size() % 2 != 0){
-            return;
-        }
-    }
 }

@@ -1,5 +1,7 @@
 package music;
 
+import utility.Messages;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.io.File;
@@ -22,7 +24,7 @@ public class Music {
             }
 
             else {
-                System.out.println("Can't find file");
+                System.out.println(Messages.MUSIC_FILE_ERROR);
             }
         }
         catch (Exception e) {

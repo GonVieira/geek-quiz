@@ -2,6 +2,7 @@ package game;
 
 import questions.Questions;
 import server.Lobby;
+import utility.Messages;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -40,19 +41,16 @@ public class Game {
     //SPENDING PHASE
     public void spendingPhase(Player player, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
         if (player.getScore() > 0) {
-            printWriter.println("\n\n\nPlayer Score: " + player.getScore());
-            printWriter.println("Choose one of the following options:");
-            printWriter.println("1)SPEND POINTS              2)PASS");
+            printWriter.println(Messages.SCORE + player.getScore() + Messages.SPEND_OR_PASS);
             String option1 = checkIfValidInput(1, 2, bufferedReader, printWriter, lobby);
 
             if (option1.equals("1")) {
-                printWriter.println("Choose one of the following options:");
-                printWriter.println("1)VIRUS(ATK)            2)ANTI-VIRUS(DEF)");
+                printWriter.println(Messages.ATTACK_OR_DEFENCE);
                 String option2 = checkIfValidInput(1, 2, bufferedReader, printWriter, lobby);
 
                 if (option2.equals("1")) {
-                    printWriter.println("Score: " + player.getScore());
-                    printWriter.println("How many points do you want to spend?");
+                    printWriter.println(Messages.SCORE + player.getScore());
+                    printWriter.println(Messages.SPENDING_POINTS);
                     String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter, lobby);
                     if (team1.containsPlayer(player)) {
                         team1.addVirus(Integer.parseInt(quantity));
@@ -62,8 +60,8 @@ public class Game {
                     int scoreLeft = player.getScore() - Integer.parseInt(quantity);
                     player.setScore(scoreLeft);
                 } else {
-                    printWriter.println("Score: " + player.getScore());
-                    printWriter.println("How many points do you want to spend?");
+                    printWriter.println(Messages.SCORE + player.getScore());
+                    printWriter.println(Messages.SPENDING_POINTS);
                     String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter, lobby);
                     if (team1.containsPlayer(player)) {
                         team1.addAntivirus(Integer.parseInt(quantity));
@@ -74,17 +72,17 @@ public class Game {
                     player.setScore(scoreLeft);
                 }
             } else {
-                printWriter.println("PHASE PASSED");
+                printWriter.println(Messages.PHASE_PASSED);
             }
             return;
         }
-        printWriter.println("\n\n\n\nYOU DON'T HAVE ANY POINTS TO SPEND");
+        printWriter.println(Messages.NO_POINTS);
     }
 
 
     public void printTeamMembers(PrintWriter printWriter) {
-        printWriter.println(ANSI_RED_BACKGROUND + ANSI_WHITE + "TEAM 1:\n\n" + "------------\n" + team1.getPlayersString() + "\n" + "------------" + ANSI_RESET + "\n");
-        printWriter.println(ANSI_BLUE_BACKGROUND + ANSI_WHITE + "TEAM 2:\n\n" + "------------\n" + team2.getPlayersString() + "\n" + "------------" + ANSI_RESET);
+        printWriter.printf(Messages.TEAM_1, team1.getPlayersString());
+        printWriter.printf(Messages.TEAM_2, team2.getPlayersString());
     }
 
     public void printTeamStats(PrintWriter printWriter) {
@@ -96,19 +94,7 @@ public class Game {
         for (Player player : team2.getPlayers()) {
             result2 += player.getName() + " / ";
         }
-
-        printWriter.println("\n\nRESOLUTION:\n");
-        printWriter.println("Team 1: " + result1);
-        printWriter.println("Firewalls: " + team1.getFirewalls());
-        printWriter.println("Virus: " + team1.getViruses());
-        printWriter.println("Antivirus: " + team1.getAntivirus());
-        printWriter.println("----------------------------");
-
-        printWriter.println("Team 2: " + result2);
-        printWriter.println("Firewalls: " + team2.getFirewalls());
-        printWriter.println("Virus: " + team2.getViruses());
-        printWriter.println("Antivirus: " + team2.getAntivirus());
-        printWriter.println("----------------------------");
+        printWriter.printf(Messages.RESOLUTION, result1, team1.getFirewalls(), team1.getViruses(), team1.getAntivirus(), result2, team2.getFirewalls(), team2.getViruses(), team2.getAntivirus());
     }
 
 

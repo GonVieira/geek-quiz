@@ -48,7 +48,7 @@ public class Team {
     public synchronized String getPlayersString() {
         String result = "";
         for (Player player : players) {
-            result += player.getName() + "\n";
+            result += " " + player.getName() + " ";
         }
         return result;
     }

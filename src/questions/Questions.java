@@ -481,7 +481,7 @@ public class Questions {
 
     }
 
-    public HashMap<String, Integer> getQuestions() {
+    public static HashMap<String, Integer> getQuestions() {
         return questions;
     }
 }

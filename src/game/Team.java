@@ -23,7 +23,7 @@ public class Team {
 
     public void updateFirewalls(Team opposingTeam) {
 
-        this.firewalls = this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus), 0));
+        this.firewalls = Math.max(0,(this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus), 0))));
     }
 
     /**

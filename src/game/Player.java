@@ -1,5 +1,7 @@
 package game;
 
+import server.Lobby;
+
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,11 +19,11 @@ public class Player {
         this.name = name;
     }
 
-    public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter) {
+    public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
         saveQuestion(question);
         printWriter.println("\n\nGET THE QUESTION RIGHT FOR 1 POINT!\n\n");
         printWriter.println(ANSI_BLUE + question + ANSI_RESET);
-        String choice = checkIfValidInput(1, 4, bufferedReader, printWriter);
+        String choice = checkIfValidInput(1, 4, bufferedReader, printWriter, lobby);
         checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }
 

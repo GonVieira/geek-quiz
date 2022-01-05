@@ -13,7 +13,6 @@ public class Server {
     private final ServerSocket serverSocket;
     public static final Game game = new Game();
     public static boolean gameStarted = false;
-    public static boolean firewallsUpdated = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     public Server(ServerSocket serverSocket) {
@@ -48,15 +47,6 @@ public class Server {
 
     public synchronized static void resetGameStarted() {
         gameStarted = false;
-    }
-
-
-    public synchronized static void firewallsWereUpdated(){
-        firewallsUpdated = true;
-    }
-
-    public synchronized static void resetFirewallBoolean(){
-        firewallsUpdated = false;
     }
 
     public synchronized static void addPlayerToTeam(Player player){
@@ -115,4 +105,6 @@ public class Server {
         }
         return ready;
     }
+
+
 }

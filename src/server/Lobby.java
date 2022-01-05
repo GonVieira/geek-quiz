@@ -42,7 +42,6 @@ public class Lobby implements Runnable {
     public void run() {
         createUsername();
         while (socket.isConnected()) {
-            CHAT:
             chatRoom();
             //Game starts
             printTeams();
@@ -72,6 +71,7 @@ public class Lobby implements Runnable {
     }
 
     public void chatRoom() {
+        printWriter.println("\n\n" + ANSI_YELLOW + "WELCOME TO THE CHATROOM!" + ANSI_RESET);
         String messageFromClient;
         while (!gameStarted) {
             try {
@@ -123,12 +123,22 @@ public class Lobby implements Runnable {
         while (lobbies.size() % 2 == 0 && game.bothTeamsareStillAlive()) {
             advance = false;
             questionPhase();
+            if (lobbies.size() % 2 != 0){
+                return;
+            }
             this.pointsSpent = false;
             resolutionChecked = false;
+
             spendingPhase();
+            if (lobbies.size() % 2 != 0){
+                return;
+            }
             if (this.gameMaster) {
                 game.aftermathPhase();
                 advance = true;
+                if (lobbies.size() % 2 != 0){
+                    return;
+                }
             } else {
                 while (!advance) {
                     printWriter.println("\n\nNot all players are ready! Please wait a sec and press Enter:\n\n");
@@ -141,6 +151,9 @@ public class Lobby implements Runnable {
                 }
             }
             resolutionPhase();
+            if (lobbies.size() % 2 != 0){
+                return;
+            }
             this.questionAnswered = false;
             pressEnterToContinue();
         }
@@ -148,8 +161,17 @@ public class Lobby implements Runnable {
 
     public void questionPhase() {
         game.distributeQuestions(player, bufferedReader, printWriter, this);
+        if (lobbies.size() % 2 != 0){
+            return;
+        }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
+        if (lobbies.size() % 2 != 0){
+            return;
+        }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
+        if (lobbies.size() % 2 != 0){
+            return;
+        }
         questionAnswered = true;
         while (!allLobbiesHaveAnsweredQuestion()) {
             printWriter.println("\n\nNot all players have answered! Please wait a sec and press Enter:\n\n");
@@ -193,10 +215,6 @@ public class Lobby implements Runnable {
     public void broadcastMessage(String messageToSend) {
         for (Lobby lobby : lobbies) {
             if (!lobby.clientUsername.equals(clientUsername)) {
-               /* if (messageToSend.contains("Game will be interrupted.")){
-                    pressEnterToContinue();
-                    lobby.chatRoom();
-                }*/
                 lobby.printWriter.println(messageToSend);
             }
         }
@@ -213,11 +231,12 @@ public class Lobby implements Runnable {
     }
 
     public void checkIfSomeoneWon() {
+        printWriter.println("HELLO");
         if (game.getTeam1().getFirewalls() <= 0) {
             printWriter.println("\n\nTEAM 2 WINS! CONGRATS!\nRETURNING TO CHAT...");
             pressEnterToContinue();
             chatRoom();
-        } else {
+        } else if (game.getTeam2().getFirewalls() <= 0){
             printWriter.println("\n\nTEAM 1 WINS! CONGRATS!\nRETURNING TO CHAT...");
             pressEnterToContinue();
             chatRoom();
@@ -266,4 +285,13 @@ public class Lobby implements Runnable {
         return clientUsername;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void checkIfSomeoneLeft(){
+        if (lobbies.size() % 2 != 0){
+            return;
+        }
+    }
 }

@@ -22,7 +22,7 @@ public class Utility {
                 e.printStackTrace();
             }
             if (choice == null){
-                lobby.broadcastMessage(ANSI_RED + lobby.getClientUsername() + GAME_INTERRUPTED);
+                lobby.broadcastMessage("\n\n" + ANSI_RED + lobby.getClientUsername() + GAME_INTERRUPTED);
                 lobbies.remove(lobby);
                 Server.game.removePlayer(lobby.getPlayer());
                 break;

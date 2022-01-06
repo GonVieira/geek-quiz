@@ -8,15 +8,12 @@ public class Messages {
     public static final String ANSI_BLUE = "\033[0;94m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\033[0;96m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\033[0;101m";
-    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
     public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
     public static final String ANSI_BLUE_BACKGROUND = "\033[0;104m";
-    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
@@ -58,7 +55,7 @@ public class Messages {
     public static final String POINTS_TO_SPEND = ANSI_YELLOW + "How many points do you want to spend?" + ANSI_RESET + "\n";
     public static final String PHASE_PASSED = "\n" + ANSI_YELLOW_BACKGROUND + ANSI_BLACK + "PHASE PASSED" + ANSI_RESET + "\n";
     public static final String NO_POINTS = "\n\n" + ANSI_CYAN_BACKGROUND + ANSI_BLACK + "YOU DON'T HAVE ANY POINTS TO SPEND" + ANSI_RESET + "\n";
-    public static final String TEAM_1 = "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "       TEAM 1:       " + ANSI_RESET + "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "------------------------------------------------------------------------------------\n" +  "%s" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
+    public static final String TEAM_1 = "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "       TEAM 1:       " + ANSI_RESET + "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" +  "%s" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
     public static final String TEAM_2 = "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "       TEAM 2:       " + ANSI_RESET + "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE +"----------------------------------------------------------------------------------------\n" + "%s" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
     public static final String RESOLUTION = "\n\n" + ANSI_YELLOW_BACKGROUND + ANSI_BLACK + "RESOLUTION:" + ANSI_RESET + "\n\n" + ANSI_PURPLE +
             "Team 1: " + ANSI_RESET + "%s \n" + ANSI_RED + "Firewalls: " + ANSI_RESET + "%s \n" + ANSI_BLUE + "Virus: " + ANSI_RESET + "%s \n" + ANSI_GREEN + "Antivirus: " + ANSI_RESET + "%s \n" + ANSI_PURPLE + "----------------------------\n\n" +

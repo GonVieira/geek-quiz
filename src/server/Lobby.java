@@ -2,10 +2,12 @@ package server;
 
 import game.Player;
 
+import javax.sound.sampled.Clip;
 import java.io.*;
 import java.net.Socket;
 
 import static music.Music.playMusic;
+import static music.Music.stopMusic;
 import static server.Server.*;
 import static utility.Messages.*;
 
@@ -25,6 +27,7 @@ public class Lobby implements Runnable {
     private boolean pointsSpent = false;
     private boolean resolutionChecked = false;
     private boolean clientQuit = false;
+    Clip music;
 
     private static final String MUSICPATH = "src/music/Output_1-2.wav";
 
@@ -137,7 +140,7 @@ public class Lobby implements Runnable {
 
     public void geekGame() {
         if (gameMaster) {
-            playMusic(MUSICPATH);
+            music = playMusic(MUSICPATH);
             resetGameStarted();
         }
         while (lobbies.size() % 2 == 0 && game.bothTeamsareStillAlive()) {
@@ -145,6 +148,7 @@ public class Lobby implements Runnable {
 
             questionPhase();
             if (lobbies.size() % 2 != 0) {
+                stopMusic(music);
                 return;
             }
 
@@ -153,6 +157,7 @@ public class Lobby implements Runnable {
 
             spendingPhase();
             if (lobbies.size() % 2 != 0) {
+                stopMusic(music);
                 return;
             }
 
@@ -160,6 +165,7 @@ public class Lobby implements Runnable {
                 game.aftermathPhase();
                 advance = true;
                 if (lobbies.size() % 2 != 0) {
+                    stopMusic(music);
                     return;
                 }
             } else {
@@ -176,6 +182,7 @@ public class Lobby implements Runnable {
 
             resolutionPhase();
             if (lobbies.size() % 2 != 0) {
+                stopMusic(music);
                 return;
             }
             this.questionAnswered = false;
@@ -185,14 +192,17 @@ public class Lobby implements Runnable {
     public void questionPhase() {
         game.distributeQuestions(player, bufferedReader, printWriter, this);
         if (lobbies.size() % 2 != 0) {
+            stopMusic(music);
             return;
         }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
         if (lobbies.size() % 2 != 0) {
+            stopMusic(music);
             return;
         }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
         if (lobbies.size() % 2 != 0) {
+            stopMusic(music);
             return;
         }
         questionAnswered = true;
@@ -267,10 +277,12 @@ public class Lobby implements Runnable {
         if (game.getTeam1().getFirewalls() <= 0) {
             printWriter.println(TEAM2_WINS);
             pressEnterToContinue();
+            stopMusic(music);
             chatRoom();
         } else if (game.getTeam2().getFirewalls() <= 0) {
             printWriter.println(TEAM1_WINS);
             pressEnterToContinue();
+            stopMusic(music);
             chatRoom();
         }
     }
@@ -291,6 +303,8 @@ public class Lobby implements Runnable {
         }
     }
 
+
+    /**CHECKS**/
     public boolean teamsArePrinted() {
         return teamsPrinted;
     }

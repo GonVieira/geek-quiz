@@ -3,32 +3,44 @@ package music;
 import utility.Messages;
 
 import javax.sound.sampled.*;
-import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 
 
 public class Music {
 
-    public static void playMusic(String musicLocation) {
+    public static Clip playMusic(String musicLocation) {
 
-        try {
             File musicPath = new File(musicLocation);
 
             if (musicPath.exists()) {
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInput);
+                AudioInputStream audioInput = null;
+                try {
+                    audioInput = AudioSystem.getAudioInputStream(musicPath);
+                } catch (UnsupportedAudioFileException | IOException e) {
+                    e.printStackTrace();
+                }
+                Clip clip = null;
+                try {
+                    clip = AudioSystem.getClip();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    clip.open(audioInput);
+                } catch (LineUnavailableException | IOException e) {
+                    e.printStackTrace();
+                }
                 clip.start();
-
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-
-            else {
+                return clip;
+            } else {
                 System.out.println(Messages.MUSIC_FILE_ERROR);
+                return null;
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+
+    public static void stopMusic(Clip clip) {
+        clip.stop();
     }
 }

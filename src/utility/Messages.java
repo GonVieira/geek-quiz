@@ -61,5 +61,5 @@ public class Messages {
     public static final String RESOLUTION = "\n\n" + ANSI_YELLOW_BACKGROUND + ANSI_BLACK + "RESOLUTION:" + ANSI_RESET + "\n\n" + ANSI_PURPLE +
             "Team 1: " + ANSI_RESET + "%s \n" + ANSI_RED + "Firewalls: " + ANSI_RESET + "%s \n" + ANSI_BLUE + "Virus: " + ANSI_RESET + "%s \n" + ANSI_GREEN + "Antivirus: " + ANSI_RESET + "%s \n" + ANSI_PURPLE + "----------------------------\n\n" +
             "Team 2: " + ANSI_RESET + "%s \n" + ANSI_RED + "Firewalls: " + ANSI_RESET + "%s \n" + ANSI_BLUE + "Virus: " + ANSI_RESET + "%s \n" + ANSI_GREEN + "Antivirus: " + ANSI_RESET + "%s \n" + ANSI_PURPLE + "----------------------------\n\n" + ANSI_RESET;
-
+//TEAM AINDA NA MERDA , CORRIGIR
 }

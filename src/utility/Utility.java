@@ -22,7 +22,7 @@ public class Utility {
 
             //Checks if the user disconnected halfway through the game
             if (choice == null) {
-                lobby.broadcastMessage(ANSI_RED + lobby.getClientUsername() + GAME_INTERRUPTED);
+                lobby.broadcastMessage(GAME_INTERRUPTED, lobby.getClientUsername());
                 lobbies.remove(lobby);
                 break;
             }

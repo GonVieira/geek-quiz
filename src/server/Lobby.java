@@ -1,11 +1,11 @@
 package server;
 
 import game.Player;
-import utility.Utility;
 
 import java.io.*;
 import java.net.Socket;
 
+import static music.Music.playMusic;
 import static server.Server.*;
 import static utility.Messages.*;
 
@@ -65,7 +65,7 @@ public class Lobby implements Runnable {
             }
             clientUsername = name;
             player = new Player(clientUsername);
-            broadcastMessage(ANSI_BLUE + "SERVER: " + ANSI_GREEN + clientUsername + ANSI_RESET + " has entered the chat!");
+            broadcastMessage(NEW_CLIENT_JOINED, clientUsername);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,6 +81,17 @@ public class Lobby implements Runnable {
                 closeEverything(socket, bufferedReader, printWriter);
                 break;
             }
+            /*
+            if (messageFromClient == null) {
+                closeEverything(socket, bufferedReader, printWriter);
+                return;
+            }
+            if (messageFromClient.matches("#QUIT")) {
+                printWriter.println(GOODBYE_MESSAGE);
+                closeEverything(socket, bufferedReader, printWriter);
+                return;
+            }
+*/
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {
@@ -97,6 +108,7 @@ public class Lobby implements Runnable {
                 }
                 printWriter.println(INCORRECT_NUMBER_OF_PLAYERS);
             }
+
             if (!messageFromClient.equals("")) {
                 broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
             }
@@ -105,7 +117,7 @@ public class Lobby implements Runnable {
 
     public void printTeams() {
         while (!allLobbiesHavePrintedTeams()) {
-            Utility.printGameName(printWriter);
+            printWriter.println(GEEK_QUIZ_LOGO);
             printWriter.println(GAME_STARTING);
             game.printTeamMembers(printWriter);
             teamsPrinted = true;
@@ -121,25 +133,29 @@ public class Lobby implements Runnable {
 
     public void geekGame() {
         if (gameMaster) {
-            // playMusic(MUSICPATH);
+            playMusic(MUSICPATH);
             resetGameStarted();
         }
         while (lobbies.size() % 2 == 0 && game.bothTeamsareStillAlive()) {
             advance = false;
+
             questionPhase();
-            if (lobbies.size() % 2 != 0){
+            if (lobbies.size() % 2 != 0) {
                 return;
             }
+
             this.pointsSpent = false;
             resolutionChecked = false;
+
             spendingPhase();
-            if (lobbies.size() % 2 != 0){
+            if (lobbies.size() % 2 != 0) {
                 return;
             }
+
             if (this.gameMaster) {
                 game.aftermathPhase();
                 advance = true;
-                if (lobbies.size() % 2 != 0){
+                if (lobbies.size() % 2 != 0) {
                     return;
                 }
             } else {
@@ -153,8 +169,9 @@ public class Lobby implements Runnable {
                     }
                 }
             }
+
             resolutionPhase();
-            if (lobbies.size() % 2 != 0){
+            if (lobbies.size() % 2 != 0) {
                 return;
             }
             this.questionAnswered = false;
@@ -163,15 +180,15 @@ public class Lobby implements Runnable {
 
     public void questionPhase() {
         game.distributeQuestions(player, bufferedReader, printWriter, this);
-        if (lobbies.size() % 2 != 0){
+        if (lobbies.size() % 2 != 0) {
             return;
         }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
-        if (lobbies.size() % 2 != 0){
+        if (lobbies.size() % 2 != 0) {
             return;
         }
         game.distributeQuestions(player, bufferedReader, printWriter, this);
-        if (lobbies.size() % 2 != 0){
+        if (lobbies.size() % 2 != 0) {
             return;
         }
         questionAnswered = true;
@@ -223,14 +240,23 @@ public class Lobby implements Runnable {
         }
     }
 
-    public void pressEnterToContinue() {
-        printWriter.println(PRESS_ENTER_TO_CONTINUE);
-        try {
-            bufferedReader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void broadcastMessage(String messageToSend, String variable) {
+        for (Lobby lobby : lobbies) {
+            if (!lobby.clientUsername.equals(clientUsername)) {
+                lobby.printWriter.printf(messageToSend, variable);
+            }
         }
+    }
 
+    public void pressEnterToContinue() {
+        if (bufferedReader != null) {
+            printWriter.println(PRESS_ENTER_TO_CONTINUE);
+            try {
+                bufferedReader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void checkIfSomeoneWon() {
@@ -238,7 +264,7 @@ public class Lobby implements Runnable {
             printWriter.println(TEAM2_WINS);
             pressEnterToContinue();
             chatRoom();
-        } else if (game.getTeam2().getFirewalls() <= 0){
+        } else if (game.getTeam2().getFirewalls() <= 0) {
             printWriter.println(TEAM1_WINS);
             pressEnterToContinue();
             chatRoom();
@@ -246,22 +272,16 @@ public class Lobby implements Runnable {
     }
 
     public void removeClient() {
+        broadcastMessage(CLIENT_LEFT_CHAT, clientUsername);
         lobbies.remove(this);
-        broadcastMessage(ANSI_BLUE + "SERVER: " + ANSI_GREEN + clientUsername + ANSI_RESET + " has left the chat!");
     }
 
     public void closeEverything(Socket socket, BufferedReader bufferedReader, PrintWriter printWriter) {
         removeClient();
         try {
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
-            if (printWriter != null) {
-                printWriter.close();
-            }
-            if (socket != null) {
-                socket.close();
-            }
+            bufferedReader.close();
+            printWriter.close();
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -283,11 +303,27 @@ public class Lobby implements Runnable {
         return resolutionChecked;
     }
 
+    /**
+     * GETTERS
+     **/
+
     public String getClientUsername() {
         return clientUsername;
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public BufferedReader getBufferedReader() {
+        return bufferedReader;
+    }
+
+    public PrintWriter getPrintWriter() {
+        return printWriter;
     }
 }

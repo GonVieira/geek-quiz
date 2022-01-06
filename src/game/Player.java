@@ -1,12 +1,12 @@
 package game;
 
 import server.Lobby;
-import utility.Messages;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import static utility.Messages.*;
 import static utility.Utility.*;
 
 public class Player {
@@ -22,8 +22,8 @@ public class Player {
 
     public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
         saveQuestion(question);
-        printWriter.println(Messages.QUESTIONS_BANNER + question);
-        String choice = checkIfValidInput(1, 4, bufferedReader, printWriter, lobby);
+        printWriter.println(QUESTIONS_BANNER + question);
+        String choice = checkIfValidInputOrIfUserQuit(1, 4, lobby);
         checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }
 
@@ -39,13 +39,13 @@ public class Player {
     public void checkIfIsCorrect(int answer, Integer correctAnswer, PrintWriter printWriter) {
 
         if (answer == correctAnswer) {
-            printWriter.println(Messages.CORRECT_ANSWER);
+            printWriter.println(CORRECT_ANSWER);
             score++;
-            printWriter.println(Messages.SCORE + score);
+            printWriter.printf(SCORE, score);
 
         } else {
-            printWriter.println(Messages.WRONG_ANSWER);
-            printWriter.println(Messages.SCORE + score);
+            printWriter.println(WRONG_ANSWER);
+            printWriter.printf(SCORE, score);
         }
     }
 

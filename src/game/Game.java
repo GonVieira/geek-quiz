@@ -2,7 +2,6 @@ package game;
 
 import questions.Questions;
 import server.Lobby;
-import utility.Messages;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -19,13 +18,11 @@ public class Game {
     private Team team2 = new Team();
     private static final Questions QUESTIONS = new Questions();
 
-
     //FIGHT PHASE
     public void aftermathPhase() {
         team1.updateFirewalls(team2);
         team2.updateFirewalls(team1);
     }
-
 
     //METHOD TO DISTRIBUTE THE QUESTIONS FOR EACH PLAYER
     public void distributeQuestions(Player player, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
@@ -38,21 +35,20 @@ public class Game {
         player.receiveQuestion(question, correctAnswer, bufferedReader, printWriter, lobby);
     }
 
-
     //SPENDING PHASE
     public void spendingPhase(Player player, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
         if (player.getScore() > 0) {
             printWriter.println(SPEND_POINTS_OR_PASS);
-            String option1 = checkIfValidInput(1, 2, bufferedReader, printWriter, lobby);
+            String option1 = checkIfValidInputOrIfUserQuit(1, 2, lobby);
 
             if (option1.equals("1")) {
                 printWriter.println(CHOOSE_ATTACK_OR_DEFENSE);
-                String option2 = checkIfValidInput(1, 2, bufferedReader, printWriter, lobby);
+                String option2 = checkIfValidInputOrIfUserQuit(1, 2, lobby);
 
                 if (option2.equals("1")) {
-                    printWriter.println(SCORE + player.getScore());
-                    printWriter.println(POINTS_TO_SPEND);
-                    String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter, lobby);
+                    printWriter.printf(SCORE, player.getScore());
+                    printWriter.println(CHOOSE_NUMBER_OF_POINTS);
+                    String quantity = checkIfValidInputOrIfUserQuit(1, player.getScore(), lobby);
                     if (team1.containsPlayer(player)) {
                         team1.addVirus(Integer.parseInt(quantity));
                     } else {
@@ -61,9 +57,9 @@ public class Game {
                     int scoreLeft = player.getScore() - Integer.parseInt(quantity);
                     player.setScore(scoreLeft);
                 } else {
-                    printWriter.println(SCORE + player.getScore());
-                    printWriter.println(POINTS_TO_SPEND);
-                    String quantity = checkIfValidInput(1, player.getScore(), bufferedReader, printWriter, lobby);
+                    printWriter.printf(SCORE, player.getScore());
+                    printWriter.println(CHOOSE_NUMBER_OF_POINTS);
+                    String quantity = checkIfValidInputOrIfUserQuit(1, player.getScore(), lobby);
                     if (team1.containsPlayer(player)) {
                         team1.addAntivirus(Integer.parseInt(quantity));
                     } else {
@@ -80,7 +76,7 @@ public class Game {
         printWriter.println(NO_POINTS);
     }
 
-
+    //PRINT METHODS
     public void printTeamMembers(PrintWriter printWriter) {
         printWriter.printf(TEAM_1, team1.getPlayersString());
         printWriter.printf(TEAM_2, team2.getPlayersString());
@@ -95,7 +91,13 @@ public class Game {
         for (Player player : team2.getPlayers()) {
             result2 += player.getName() + " / ";
         }
-        printWriter.printf(RESOLUTION, result1, team1.getFirewalls(), team1.getViruses(), team1.getAntivirus(), result2, team2.getFirewalls(), team2.getViruses(), team2.getAntivirus());
+        printWriter.println(ANSI_WHITE_BACKGROUND + ANSI_BLACK);
+        printWriter.printf("%-15s %15s %30s %n", "", "TEAM 1", "TEAM 2");
+        printWriter.println("\033[4;30m");
+        printWriter.printf("%-15s %15s %30s %n", "FIREWALLS |", team1.getFirewalls(), team2.getFirewalls());
+        printWriter.printf("%-15s %15s %30s %n", "VIRUS     |", team1.getViruses(), team2.getViruses());
+        printWriter.printf("%-15s %15s %30s %n", "ANTIVIRUS |", team1.getAntivirus(), team2.getAntivirus());
+        printWriter.println(ANSI_RESET);
     }
 
 

@@ -23,7 +23,7 @@ public class Team {
 
     public void updateFirewalls(Team opposingTeam) {
 
-        this.firewalls = Math.max(0,(this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus), 0))));
+        this.firewalls = Math.max(0, (this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus), 0))));
     }
 
     /**
@@ -54,9 +54,9 @@ public class Team {
     }
 
     public boolean containsPlayer(Player player) {
-       boolean check = false;
+        boolean check = false;
         for (Player listPlayer : players) {
-            if (player.getName().equals(listPlayer.getName())){
+            if (player.getName().equals(listPlayer.getName())) {
                 check = true;
             }
         }

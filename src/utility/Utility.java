@@ -1,47 +1,57 @@
 package utility;
 
 import server.Lobby;
-import server.Server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import static server.Server.lobbies;
 import static utility.Messages.*;
 
 public class Utility {
 
-    public static String checkIfValidInput(Integer minimumAcceptable, Integer maximumAcceptable, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
+    public static String checkIfValidInputOrIfUserQuit(Integer minimumAcceptable, Integer maximumAcceptable, Lobby lobby) {
         String choice = null;
         boolean invalid = true;
+
         while (invalid) {
             try {
-                choice = bufferedReader.readLine();
+                choice = lobby.getBufferedReader().readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (choice == null){
-                lobby.broadcastMessage("\n\n" + ANSI_RED + lobby.getClientUsername() + GAME_INTERRUPTED);
+
+            //Checks if the user disconnected halfway through the game
+            if (choice == null) {
+                lobby.broadcastMessage(ANSI_RED + lobby.getClientUsername() + GAME_INTERRUPTED);
                 lobbies.remove(lobby);
-                Server.game.removePlayer(lobby.getPlayer());
                 break;
             }
+            //Checks if user wants to disconnect from terminal
+            if (choice.matches("#QUIT")) {
+                lobby.getPrintWriter().println(GOODBYE_MESSAGE);
+                lobby.broadcastMessage(GAME_INTERRUPTED, lobby.getClientUsername());
+                lobbies.remove(lobby);
+                try {
+                    lobby.getBufferedReader().close();
+                    lobby.getPrintWriter().close();
+                    lobby.getSocket().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //Checks if input matches current choice options
             if (choice.matches(".*[0-9]")) {
                 if (Integer.parseInt(choice) >= minimumAcceptable && Integer.parseInt(choice) <= maximumAcceptable) {
                     invalid = false;
-                }else {
-                    printWriter.println(INVALID_INPUT);
+                } else {
+                    lobby.getPrintWriter().println(INVALID_INPUT);
 
                 }
             } else {
-                printWriter.println(INVALID_INPUT);
+                lobby.getPrintWriter().println(INVALID_INPUT);
             }
         }
         return choice;
-    }
-
-    public static void printGameName(PrintWriter printWriter) {
-        printWriter.println(GEEK_QUIZ);
     }
 }

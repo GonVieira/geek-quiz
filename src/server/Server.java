@@ -11,6 +11,7 @@ import static utility.Messages.*;
 
 public class Server {
 
+    private static final int PORT = 1234;
     private final ServerSocket serverSocket;
     public static final Game game = new Game();
     public static boolean gameStarted = false;
@@ -21,7 +22,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(8080);
+        ServerSocket serverSocket = new ServerSocket(PORT);
         Server server = new Server(serverSocket);
         System.out.println(SERVER_ON);
         server.startServer();

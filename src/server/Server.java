@@ -1,13 +1,13 @@
 package server;
 
 import game.Game;
-import game.Player;
-import utility.Messages;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import static utility.Messages.*;
 
 public class Server {
 
@@ -23,7 +23,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8080);
         Server server = new Server(serverSocket);
-        System.out.println(Messages.SERVER_ON);
+        System.out.println(SERVER_ON);
         server.startServer();
     }
 
@@ -32,7 +32,7 @@ public class Server {
         try {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
-                System.out.println(Messages.CLIENT_CONNECT + socket.getInetAddress().getHostAddress());
+                System.out.println(CLIENT_CONNECTED + socket.getInetAddress().getHostAddress());
                 Lobby lobby = new Lobby(socket);
                 Thread thread = new Thread(lobby);
                 thread.start();
@@ -50,11 +50,13 @@ public class Server {
         gameStarted = false;
     }
 
-    public synchronized static void addPlayerToTeam(Player player){
-        if (lobbies.size() % 2 != 0)
-            game.getTeam1().getPlayers().add(player);
-        else
-            game.getTeam2().getPlayers().add(player);
+    public synchronized static void addPlayersToTeam() {
+        for (int i = 0; i < lobbies.size(); i++) {
+            if (i % 2 == 0)
+                game.getTeam1().getPlayers().add(lobbies.get(i).getPlayer());
+            else
+                game.getTeam2().getPlayers().add(lobbies.get(i).getPlayer());
+        }
     }
 
     public void closeServerSocket() {
@@ -67,40 +69,40 @@ public class Server {
         }
     }
 
-    public static boolean allLobbiesHavePrintedTeams(){
+    public static boolean allLobbiesHavePrintedTeams() {
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.teamsArePrinted()){
+            if (!lobby.teamsArePrinted()) {
                 ready = false;
             }
         }
         return ready;
     }
 
-    public static boolean allLobbiesHaveAnsweredQuestion(){
+    public static boolean allLobbiesHaveAnsweredQuestion() {
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.questionIsAnswered()){
+            if (!lobby.questionIsAnswered()) {
                 ready = false;
             }
         }
         return ready;
     }
 
-    public static boolean allLobbiesHaveSpentPoints(){
+    public static boolean allLobbiesHaveSpentPoints() {
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.choiceIsMade()){
+            if (!lobby.choiceIsMade()) {
                 ready = false;
             }
         }
         return ready;
     }
 
-    public static boolean allLobbiesHaveCheckedResolution(){
+    public static boolean allLobbiesHaveCheckedResolution() {
         boolean ready = true;
         for (Lobby lobby : lobbies) {
-            if (!lobby.resolutionIsChecked()){
+            if (!lobby.resolutionIsChecked()) {
                 ready = false;
             }
         }

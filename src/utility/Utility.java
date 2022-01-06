@@ -1,12 +1,14 @@
 package utility;
 
 import server.Lobby;
+import server.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import static server.Server.lobbies;
+import static utility.Messages.*;
 
 public class Utility {
 
@@ -20,24 +22,26 @@ public class Utility {
                 e.printStackTrace();
             }
             if (choice == null){
-                lobby.broadcastMessage(lobby.getClientUsername() + Messages.GAME_INTERRUPTED);
+                lobby.broadcastMessage(ANSI_RED + lobby.getClientUsername() + GAME_INTERRUPTED);
                 lobbies.remove(lobby);
+                Server.game.removePlayer(lobby.getPlayer());
+                break;
             }
             if (choice.matches(".*[0-9]")) {
                 if (Integer.parseInt(choice) >= minimumAcceptable && Integer.parseInt(choice) <= maximumAcceptable) {
                     invalid = false;
                 }else {
-                    printWriter.println(Messages.INVALID_INPUT);
+                    printWriter.println(INVALID_INPUT);
 
                 }
             } else {
-                printWriter.println(Messages.INVALID_INPUT);
+                printWriter.println(INVALID_INPUT);
             }
         }
         return choice;
     }
 
     public static void printGameName(PrintWriter printWriter) {
-        printWriter.println(Messages.GEEK_QUIZ);
+        printWriter.println(GEEK_QUIZ);
     }
 }

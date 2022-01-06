@@ -22,7 +22,7 @@ public class Player {
 
     public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
         saveQuestion(question);
-        printWriter.println(Messages.ADVERTISING + question);
+        printWriter.println(Messages.QUESTIONS_BANNER + question);
         String choice = checkIfValidInput(1, 4, bufferedReader, printWriter, lobby);
         checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }

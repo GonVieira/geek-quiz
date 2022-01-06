@@ -77,7 +77,8 @@ public class Messages {
             "Team 2: " + ANSI_RESET + "%s \n" + ANSI_RED + "Firewalls: " + ANSI_RESET + "%s \n" + ANSI_BLUE + "Virus: " + ANSI_RESET + "%s \n" + ANSI_GREEN + "Antivirus: " + ANSI_RESET + "%s \n" + ANSI_PURPLE + "----------------------------\n\n" + ANSI_RESET;
     public static final String PLAYERS_HAVENT_CHECKED_RESOLUTION = "\n\n" + ANSI_BLUE + "Not all players have seen the resolution! Please wait a sec and press Enter:" + ANSI_RESET + "\n\n";
 
-    //Goodbye Message
+    //Goodbye Messages
     public static final String GOODBYE_MESSAGE = "GOODBYE! HOPE TO SEE YOU SOON!";
+    public static final String SERVER_CRASH_MESSAGE = "WHAT A SALTY LOSER! OK, LET'S RUIN THE GAME FOR EVERYONE!";
 
 }

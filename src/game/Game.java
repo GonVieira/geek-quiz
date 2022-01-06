@@ -100,7 +100,6 @@ public class Game {
         printWriter.println(ANSI_RESET);
     }
 
-
     public boolean bothTeamsareStillAlive(){
         return team1.getFirewalls() > 0 && team2.getFirewalls() > 0;
     }

@@ -26,6 +26,10 @@ public class Utility {
                 lobbies.remove(lobby);
                 break;
             }
+            if (choice.matches("#RAGEQUIT")) {
+                lobby.getPrintWriter().println(SERVER_CRASH_MESSAGE);
+                System.exit(0);
+            }
             //Checks if user wants to disconnect from terminal
             if (choice.matches("#QUIT")) {
                 lobby.getPrintWriter().println(GOODBYE_MESSAGE);

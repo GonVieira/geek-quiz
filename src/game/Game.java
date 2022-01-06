@@ -105,11 +105,6 @@ public class Game {
         return team1.getFirewalls() > 0 && team2.getFirewalls() > 0;
     }
 
-    public void removePlayer(Player player){
-        team1.getPlayers().remove(player);
-        team2.getPlayers().remove(player);
-    }
-
     /**
      * SETTERS & GETTERS
      **/

@@ -24,6 +24,7 @@ public class Lobby implements Runnable {
     private boolean questionAnswered = false;
     private boolean pointsSpent = false;
     private boolean resolutionChecked = false;
+    private boolean clientQuit = false;
 
     private static final String MUSICPATH = "src/music/Output_1-2.wav";
 
@@ -43,7 +44,7 @@ public class Lobby implements Runnable {
     @Override
     public void run() {
         createUsername();
-        while (socket.isConnected()) {
+        while (socket.isConnected() && !clientQuit) {
             //Chat:
             chatRoom();
             //Game starts
@@ -81,17 +82,20 @@ public class Lobby implements Runnable {
                 closeEverything(socket, bufferedReader, printWriter);
                 break;
             }
-            /*
+
             if (messageFromClient == null) {
                 closeEverything(socket, bufferedReader, printWriter);
-                return;
             }
             if (messageFromClient.matches("#QUIT")) {
+                clientQuit = true;
+                closeEverything(socket, bufferedReader, printWriter);
+            }
+            if (messageFromClient.matches("#CLOSESERVER")) {
                 printWriter.println(GOODBYE_MESSAGE);
                 closeEverything(socket, bufferedReader, printWriter);
-                return;
+                System.exit(0);
             }
-*/
+
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {

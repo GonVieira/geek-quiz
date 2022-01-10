@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static utility.Messages.*;
 
@@ -13,6 +15,7 @@ public class Server {
 
     private static final int PORT = 1234;
     private final ServerSocket serverSocket;
+    private ExecutorService threadPool = Executors.newFixedThreadPool(30);
     public static final Game game = new Game();
     public static boolean gameStarted = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
@@ -34,9 +37,7 @@ public class Server {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 System.out.println(CLIENT_CONNECTED + socket.getInetAddress().getHostAddress());
-                Lobby lobby = new Lobby(socket);
-                Thread thread = new Thread(lobby);
-                thread.start();
+                threadPool.submit(new Lobby(socket));
             }
         } catch (IOException e) {
             e.printStackTrace();

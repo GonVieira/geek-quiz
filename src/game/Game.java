@@ -37,6 +37,7 @@ public class Game {
 
     //SPENDING PHASE
     public void spendingPhase(Player player, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
+        printWriter.println(SPEND_PHASE_BANNER);
         if (player.getScore() > 0) {
             printWriter.println(SPEND_POINTS_OR_PASS);
             String option1 = checkIfValidInputOrIfUserQuit(1, 2, lobby);
@@ -46,7 +47,7 @@ public class Game {
                 String option2 = checkIfValidInputOrIfUserQuit(1, 2, lobby);
 
                 if (option2.equals("1")) {
-                    printWriter.printf(SCORE, player.getScore());
+                    printWriter.printf(POINTS, player.getScore());
                     printWriter.println(CHOOSE_NUMBER_OF_POINTS);
                     String quantity = checkIfValidInputOrIfUserQuit(1, player.getScore(), lobby);
                     if (team1.containsPlayer(player)) {
@@ -57,7 +58,7 @@ public class Game {
                     int scoreLeft = player.getScore() - Integer.parseInt(quantity);
                     player.setScore(scoreLeft);
                 } else {
-                    printWriter.printf(SCORE, player.getScore());
+                    printWriter.printf(POINTS, player.getScore());
                     printWriter.println(CHOOSE_NUMBER_OF_POINTS);
                     String quantity = checkIfValidInputOrIfUserQuit(1, player.getScore(), lobby);
                     if (team1.containsPlayer(player)) {
@@ -91,9 +92,8 @@ public class Game {
         for (Player player : team2.getPlayers()) {
             result2 += player.getName() + " / ";
         }
-        printWriter.println(ANSI_WHITE_BACKGROUND + ANSI_BLACK);
-        printWriter.printf("%-15s %15s %30s %n", "", "TEAM 1", "TEAM 2");
-        printWriter.println("\033[4;30m");
+        printWriter.println(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "\033[4;30m");
+        printWriter.printf("%-15s %15s %30s %n", "","TEAM 1","TEAM 2");
         printWriter.printf("%-15s %15s %30s %n", "FIREWALLS |", team1.getFirewalls(), team2.getFirewalls());
         printWriter.printf("%-15s %15s %30s %n", "VIRUS     |", team1.getViruses(), team2.getViruses());
         printWriter.printf("%-15s %15s %30s %n", "ANTIVIRUS |", team1.getAntivirus(), team2.getAntivirus());

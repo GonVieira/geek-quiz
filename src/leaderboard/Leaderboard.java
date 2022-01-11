@@ -32,8 +32,10 @@ public class Leaderboard {
     public static void printLeaderboard(PrintWriter printWriter) {
         String heading1 = "PLAYER";
         String heading2 = "WINS";
-        String divider = "------------------------------------------------------------";
-        printWriter.println(CLEAR + ANSI_WHITE_BACKGROUND + ANSI_BLACK);
+        String divider = "-----------------------------------------------";
+        printWriter.println(CLEAR);
+        printWriter.println("SCORE:");
+        printWriter.println(ANSI_WHITE_BACKGROUND + ANSI_BLACK);
         printWriter.println(divider);
         printWriter.printf("%15s %30s %n", heading1, heading2);
         printWriter.println(divider);

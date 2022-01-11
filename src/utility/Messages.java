@@ -48,9 +48,10 @@ public class Messages {
             "                                                           \n" + ANSI_RESET;
 
     //General Game prints
-    public static final String TEAM_1 = "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "       TEAM 1:       " + ANSI_RESET + "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" + "%s" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
-    public static final String TEAM_2 = "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "       TEAM 2:       " + ANSI_RESET + "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" + "%s" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
+    public static final String TEAM_1 = "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "       TEAM 1:       " + ANSI_RESET + "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" + "%s\n" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
+    public static final String TEAM_2 = "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "       TEAM 2:       " + ANSI_RESET + "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" + "%s\n" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
     public static final String PRESS_ENTER_TO_CONTINUE = "\n" + ANSI_BLUE + "Press Enter to continue:" + ANSI_RESET + "\n\n";
+    public static final String PLAYERS_READY = ANSI_YELLOW + "All Players are ready! Press Enter:" + ANSI_RESET;
     public static final String INVALID_INPUT = "\n" + ANSI_RED_BACKGROUND + ANSI_BLACK + "Invalid Input. Try again:" + ANSI_RESET + "\n";
     public static final String GAME_INTERRUPTED = "\n\n" + ANSI_RED + "%s" + " left the server! Game will be interrupted after your next input." + ANSI_RESET + "\n";
 
@@ -58,25 +59,24 @@ public class Messages {
     public static final String QUESTIONS_BANNER = "\n\n" + ANSI_WHITE_BACKGROUND + ANSI_BLACK + "GET THE QUESTIONS RIGHT FOR 1 POINT EACH!" + ANSI_RESET + "\n\n";
     public static final String CORRECT_ANSWER = ANSI_GREEN + "\nCorrect answer!\n" + ANSI_RESET;
     public static final String WRONG_ANSWER = ANSI_RED + "\nIncorrect answer!\n" + ANSI_RESET;
-    public static final String PLAYERS_HAVENT_ANSWERED = "\n\n" + ANSI_BLUE + "Not all players have answered! Please wait a sec and press Enter:" + ANSI_RESET + "\n\n";
+    public static final String PLAYERS_HAVENT_ANSWERED = "\n\n" + ANSI_BLUE + "Not all players have answered! Please wait a sec!" + ANSI_RESET + "\n\n";
 
     //Spend Phase prints
-    public static final String SCORE = ANSI_YELLOW + "\nYour score is : " + ANSI_RESET + "%s" + "\n";
+    public static final String SPEND_PHASE_BANNER = "\n\n" + ANSI_WHITE_BACKGROUND + ANSI_BLACK + "BET THE POINTS YOU HAVE EARNED!" + ANSI_RESET + "\n\n";
+    public static final String POINTS = ANSI_YELLOW + "\nYour points are : " + ANSI_RESET + "%s" + "\n";
     public static final String SPEND_POINTS_OR_PASS = ANSI_YELLOW + "\nChoose one of the following options:\n1)SPEND POINTS              2)PASS" + ANSI_RESET + "\n";
     public static final String CHOOSE_ATTACK_OR_DEFENSE = ANSI_YELLOW + "\nChoose one of the following options:\n1)VIRUS(ATK)            2)ANTI-VIRUS(DEF)" + ANSI_RESET + "\n";
     public static final String CHOOSE_NUMBER_OF_POINTS = ANSI_YELLOW + "How many points do you want to spend?" + ANSI_RESET + "\n";
     public static final String PHASE_PASSED = "\n" + ANSI_YELLOW_BACKGROUND + ANSI_BLACK + "PHASE PASSED" + ANSI_RESET + "\n";
     public static final String NO_POINTS = "\n\n" + ANSI_CYAN_BACKGROUND + ANSI_BLACK + "YOU DON'T HAVE ANY POINTS TO SPEND" + ANSI_RESET + "\n";
-    public static final String PLAYERS_HAVENT_SPENT_POINTS = "\n\n" + ANSI_BLUE + "Not all players have used their points! Please wait a sec and press Enter:" + ANSI_RESET + "\n\n";
+    public static final String PLAYERS_HAVENT_SPENT_POINTS = "\n\n" + ANSI_BLUE + "Not all players have used their points! Please wait a sec!" + ANSI_RESET + "\n\n";
 
     //Resolution Phase prints
+    public static final String RESOLUTION_PHASE_BANNER = "\n\n" + ANSI_WHITE_BACKGROUND + ANSI_BLACK + "RESOLUTION PHASE!" + ANSI_RESET + "\n\n";
     public static final String TEAM1_WINS = "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "TEAM 1 WINS! CONGRATS!" + ANSI_RESET + "\n" + ANSI_BLACK_BACKGROUND + ANSI_WHITE + "RETURNING TO CHAT..." + ANSI_RESET + "\n";
     public static final String TEAM2_WINS = "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "TEAM 2 WINS! CONGRATS!" + ANSI_RESET + "\n" + ANSI_BLACK_BACKGROUND + ANSI_WHITE + "RETURNING TO CHAT..." + ANSI_RESET + "\n";
-    public static final String PLAYERS_NOT_READY = "\n\n" + ANSI_BLUE + "Not all players are ready! Please wait a sec and press Enter:" + ANSI_RESET + "\n\n";
-    public static final String RESOLUTION = "\n\n" + ANSI_YELLOW_BACKGROUND + ANSI_BLACK + "RESOLUTION:" + ANSI_RESET + "\n\n" + ANSI_PURPLE +
-            "Team 1: " + ANSI_RESET + "%s \n" + ANSI_RED + "Firewalls: " + ANSI_RESET + "%s \n" + ANSI_BLUE + "Virus: " + ANSI_RESET + "%s \n" + ANSI_GREEN + "Antivirus: " + ANSI_RESET + "%s \n" + ANSI_PURPLE + "----------------------------\n\n" +
-            "Team 2: " + ANSI_RESET + "%s \n" + ANSI_RED + "Firewalls: " + ANSI_RESET + "%s \n" + ANSI_BLUE + "Virus: " + ANSI_RESET + "%s \n" + ANSI_GREEN + "Antivirus: " + ANSI_RESET + "%s \n" + ANSI_PURPLE + "----------------------------\n\n" + ANSI_RESET;
-    public static final String PLAYERS_HAVENT_CHECKED_RESOLUTION = "\n\n" + ANSI_BLUE + "Not all players have seen the resolution! Please wait a sec and press Enter:" + ANSI_RESET + "\n\n";
+    public static final String PLAYERS_NOT_READY = "\n\n" + ANSI_BLUE + "Not all players are ready! Please wait a sec!" + ANSI_RESET + "\n\n";
+    public static final String PLAYERS_HAVENT_CHECKED_RESOLUTION = "\n\n" + ANSI_BLUE + "Not all players have seen the resolution! Please wait a sec!" + ANSI_RESET + "\n\n";
 
     //Goodbye Messages
     public static final String GOODBYE_MESSAGE = "GOODBYE! HOPE TO SEE YOU SOON!";

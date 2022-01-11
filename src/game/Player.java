@@ -41,11 +41,11 @@ public class Player {
         if (answer == correctAnswer) {
             printWriter.println(CORRECT_ANSWER);
             score++;
-            printWriter.printf(SCORE, score);
+            printWriter.printf(POINTS, score);
 
         } else {
             printWriter.println(WRONG_ANSWER);
-            printWriter.printf(SCORE, score);
+            printWriter.printf(POINTS, score);
         }
     }
 

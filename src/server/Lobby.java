@@ -21,6 +21,25 @@ public class Lobby implements Runnable {
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private static Leaderboard leaderboard;
+    private Clip music;
+
+    private String clientUsername = "";
+    private Player player;
+
+    static boolean advance = false;
+    private boolean gameMaster = false;
+    private boolean teamsPrinted = false;
+
+    private boolean questionAnswered = false;
+    private static int playersThatFinishedQuestions = 0;
+    private boolean pointsSpent = false;
+    private static int playersThatFinishedBet = 0;
+    private boolean resolutionChecked = false;
+
+
+    private boolean clientQuit = false;
+
+    private static final String MUSICPATH = "src/music/Output_1-2.wav";
 
     static {
         try {
@@ -29,20 +48,6 @@ public class Lobby implements Runnable {
             e.printStackTrace();
         }
     }
-
-    private String clientUsername = "";
-    private Player player;
-
-    static boolean advance = false;
-    private boolean gameMaster = false;
-    private boolean teamsPrinted = false;
-    private boolean questionAnswered = false;
-    private boolean pointsSpent = false;
-    private boolean resolutionChecked = false;
-    private boolean clientQuit = false;
-    private Clip music;
-
-    private static final String MUSICPATH = "src/music/Output_1-2.wav";
 
     public Lobby(Socket socket) {
         try {
@@ -89,6 +94,7 @@ public class Lobby implements Runnable {
     }
 
     public void chatRoom() {
+        printWriter.println(CLEAR);
         printWriter.println(WELCOME_TO_CHATROOM);
         String messageFromClient;
         while (!gameStarted) {
@@ -131,7 +137,10 @@ public class Lobby implements Runnable {
                 printWriter.println(INCORRECT_NUMBER_OF_PLAYERS);
             }
 
-            if (!messageFromClient.equals("")) {
+            if (!messageFromClient.equals("")
+                    && !messageFromClient.matches("#SCORES")
+                    && !messageFromClient.matches("#RAGEQUIT")
+                    && !messageFromClient.matches("#QUIT")) {
                 broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
             }
         }
@@ -139,6 +148,7 @@ public class Lobby implements Runnable {
 
     public void printTeams() {
         while (!allLobbiesHavePrintedTeams()) {
+            printWriter.println(CLEAR);
             printWriter.println(GEEK_QUIZ_LOGO);
             printWriter.println(GAME_STARTING);
             game.printTeamMembers(printWriter);
@@ -161,7 +171,9 @@ public class Lobby implements Runnable {
         while (lobbies.size() % 2 == 0 && game.bothTeamsareStillAlive()) {
             advance = false;
             this.pointsSpent = false;
+            playersThatFinishedBet = 0;
 
+            printWriter.println(CLEAR);
             questionPhase();
             if (lobbies.size() % 2 != 0) {
                 stopMusic(music);
@@ -171,6 +183,7 @@ public class Lobby implements Runnable {
 
             resolutionChecked = false;
 
+            printWriter.println(CLEAR);
             spendingPhase();
             if (lobbies.size() % 2 != 0) {
                 stopMusic(music);
@@ -181,6 +194,7 @@ public class Lobby implements Runnable {
             if (this.gameMaster) {
                 game.aftermathPhase();
                 advance = true;
+                broadcastMessage(PLAYERS_READY);
                 if (lobbies.size() % 2 != 0) {
                     stopMusic(music);
                     player.setScore(0);
@@ -199,6 +213,7 @@ public class Lobby implements Runnable {
                 }
             }
 
+            printWriter.println(CLEAR);
             resolutionPhase();
             if (lobbies.size() % 2 != 0) {
                 stopMusic(music);
@@ -206,6 +221,7 @@ public class Lobby implements Runnable {
                 return;
             }
             this.questionAnswered = false;
+            playersThatFinishedQuestions = 0;
         }
     }
 
@@ -229,6 +245,10 @@ public class Lobby implements Runnable {
             return;
         }
         questionAnswered = true;
+        playersThatFinishedQuestions++;
+        if (playersThatFinishedQuestions == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())){
+            broadcastMessage(PLAYERS_READY);
+        }
         while (!allLobbiesHaveAnsweredQuestion()) {
             printWriter.println(PLAYERS_HAVENT_ANSWERED);
             try {
@@ -243,6 +263,10 @@ public class Lobby implements Runnable {
     public void spendingPhase() {
         game.spendingPhase(player, bufferedReader, printWriter, this);
         pointsSpent = true;
+        playersThatFinishedBet++;
+        if (playersThatFinishedBet == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())){
+            broadcastMessage(PLAYERS_READY);
+        }
         while (!allLobbiesHaveSpentPoints()) {
             printWriter.println(PLAYERS_HAVENT_SPENT_POINTS);
             try {
@@ -255,6 +279,7 @@ public class Lobby implements Runnable {
     }
 
     public void resolutionPhase() {
+        printWriter.println(RESOLUTION_PHASE_BANNER);
         game.printTeamStats(printWriter);
         resolutionChecked = true;
         pressEnterToContinue();
@@ -303,6 +328,10 @@ public class Lobby implements Runnable {
                 for (Player player : game.getTeam2().getPlayers()) {
                     addPlayerToLeaderboard(player.getName());
                 }
+                pressEnterToContinue();
+                stopMusic(music);
+                player.setScore(0);
+                chatRoom();
             }
         } else if (game.getTeam2().getFirewalls() <= 0) {
             printWriter.println(TEAM1_WINS);
@@ -310,16 +339,15 @@ public class Lobby implements Runnable {
                 for (Player player : game.getTeam1().getPlayers()) {
                     addPlayerToLeaderboard(player.getName());
                 }
+                pressEnterToContinue();
+                stopMusic(music);
+                player.setScore(0);
+                chatRoom();
             }
-
         }
         if (gameMaster) {
             serialize(leaderboard);
         }
-        pressEnterToContinue();
-        stopMusic(music);
-        player.setScore(0);
-        chatRoom();
     }
 
     public void removeClient() {

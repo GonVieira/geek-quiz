@@ -1,11 +1,16 @@
 package server;
 
 import game.Player;
+import leaderboard.Leaderboard;
 
 import javax.sound.sampled.Clip;
 import java.io.*;
 import java.net.Socket;
 
+import static leaderboard.Leaderboard.addPlayerToLeaderboard;
+import static leaderboard.Leaderboard.printLeaderboard;
+import static leaderboard.LeaderboardManager.deserialize;
+import static leaderboard.LeaderboardManager.serialize;
 import static music.Music.*;
 import static server.Server.*;
 import static utility.Messages.*;
@@ -15,6 +20,15 @@ public class Lobby implements Runnable {
     private Socket socket;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
+    private static Leaderboard leaderboard;
+
+    static {
+        try {
+            leaderboard = new Leaderboard(deserialize());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private String clientUsername = "";
     private Player player;
@@ -29,7 +43,6 @@ public class Lobby implements Runnable {
     private Clip music;
 
     private static final String MUSICPATH = "src/music/Output_1-2.wav";
-
 
     public Lobby(Socket socket) {
         try {
@@ -53,6 +66,7 @@ public class Lobby implements Runnable {
             printTeams();
             geekGame();
             checkIfSomeoneWon();
+            gameMaster = false;
         }
     }
 
@@ -87,6 +101,9 @@ public class Lobby implements Runnable {
 
             if (messageFromClient == null) {
                 closeEverything(socket, bufferedReader, printWriter);
+            }
+            if (messageFromClient.matches("#SCORES")) {
+                printLeaderboard(printWriter);
             }
             if (messageFromClient.matches("#QUIT")) {
                 clientQuit = true;
@@ -143,6 +160,7 @@ public class Lobby implements Runnable {
         }
         while (lobbies.size() % 2 == 0 && game.bothTeamsareStillAlive()) {
             advance = false;
+            this.pointsSpent = false;
 
             questionPhase();
             if (lobbies.size() % 2 != 0) {
@@ -151,7 +169,6 @@ public class Lobby implements Runnable {
                 return;
             }
 
-            this.pointsSpent = false;
             resolutionChecked = false;
 
             spendingPhase();
@@ -169,6 +186,7 @@ public class Lobby implements Runnable {
                     player.setScore(0);
                     return;
                 }
+
             } else {
                 while (!advance) {
                     printWriter.println(PLAYERS_NOT_READY);
@@ -281,17 +299,27 @@ public class Lobby implements Runnable {
     public void checkIfSomeoneWon() {
         if (game.getTeam1().getFirewalls() <= 0) {
             printWriter.println(TEAM2_WINS);
-            pressEnterToContinue();
-            stopMusic(music);
-            player.setScore(0);
-            chatRoom();
+            if (gameMaster) {
+                for (Player player : game.getTeam2().getPlayers()) {
+                    addPlayerToLeaderboard(player.getName());
+                }
+            }
         } else if (game.getTeam2().getFirewalls() <= 0) {
             printWriter.println(TEAM1_WINS);
-            pressEnterToContinue();
-            stopMusic(music);
-            player.setScore(0);
-            chatRoom();
+            if (gameMaster) {
+                for (Player player : game.getTeam1().getPlayers()) {
+                    addPlayerToLeaderboard(player.getName());
+                }
+            }
+
         }
+        if (gameMaster) {
+            serialize(leaderboard);
+        }
+        pressEnterToContinue();
+        stopMusic(music);
+        player.setScore(0);
+        chatRoom();
     }
 
     public void removeClient() {
@@ -311,7 +339,9 @@ public class Lobby implements Runnable {
     }
 
 
-    /**CHECKS**/
+    /**
+     * CHECKS
+     **/
     public boolean teamsArePrinted() {
         return teamsPrinted;
     }

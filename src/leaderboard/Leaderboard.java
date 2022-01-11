@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static utility.Messages.*;
 
@@ -34,7 +35,7 @@ public class Leaderboard {
         String heading2 = "WINS";
         String divider = "-----------------------------------------------";
         printWriter.println(CLEAR);
-        printWriter.println("SCORE:");
+        printWriter.println("TOP 10 PLAYERS:");
         printWriter.println(ANSI_WHITE_BACKGROUND + ANSI_BLACK);
         printWriter.println(divider);
         printWriter.printf("%15s %30s %n", heading1, heading2);
@@ -44,9 +45,21 @@ public class Leaderboard {
                 .stream()
                 .sorted(Comparator.comparing(Map.Entry<String, Integer>::getValue).reversed())
                 .map(Map.Entry::getKey)
+                .limit(10)
                 .forEach(o -> printWriter.printf("%15s %30s %n", o, leaderboard.get(o)));
 
         printWriter.println(divider + "\n" + ANSI_RESET);
+    }
+
+    public static int getPlayerRank(String name) {
+        if (leaderboard.containsKey(name)) {
+            return leaderboard.entrySet()
+                    .stream()
+                    .sorted(Comparator.comparing(Map.Entry<String, Integer>::getValue).reversed())
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList()).indexOf(name) + 1;
+        }
+        return 0;
     }
 
     public Map<String, Integer> getLeaderboard() {

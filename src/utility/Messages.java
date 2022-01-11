@@ -30,6 +30,7 @@ public class Messages {
     public static final String INVALID_USERNAME = "\n" + ANSI_RED_BACKGROUND + ANSI_BLACK + "That name is already taken!" + ANSI_RESET + "\n";
     public static final String WELCOME_TO_CHATROOM = "\n\n" + ANSI_YELLOW + "WELCOME TO THE CHATROOM!" + ANSI_RESET;
     public static final String NEW_CLIENT_JOINED = ANSI_BLUE + "SERVER: " + ANSI_GREEN + "%s" + ANSI_RESET + " has entered the chatroom!\n";
+    public static final String NOT_IN_LEADERBOARD = ANSI_BLUE + "You are not in the Leaderboards yet!" + ANSI_RESET;
     public static final String GAME_CODE_USED = "\n\n" + ANSI_BLUE + "Gotcha! Let's get this game started!" + ANSI_RESET + "\n";
     public static final String INCORRECT_NUMBER_OF_PLAYERS = "\n" + ANSI_YELLOW + "Number of participants must be even." + ANSI_RESET + "\n";
     public static final String GAME_CODE_USED_NOTIFICATION = "\n" + ANSI_YELLOW + "Someone typed a secret code! Press enter!" + ANSI_RESET + "\n";

@@ -7,8 +7,7 @@ import javax.sound.sampled.Clip;
 import java.io.*;
 import java.net.Socket;
 
-import static leaderboard.Leaderboard.addPlayerToLeaderboard;
-import static leaderboard.Leaderboard.printLeaderboard;
+import static leaderboard.Leaderboard.*;
 import static leaderboard.LeaderboardManager.deserialize;
 import static leaderboard.LeaderboardManager.serialize;
 import static music.Music.*;
@@ -107,9 +106,21 @@ public class Lobby implements Runnable {
 
             if (messageFromClient == null) {
                 closeEverything(socket, bufferedReader, printWriter);
+                return;
             }
             if (messageFromClient.matches("#SCORES")) {
                 printLeaderboard(printWriter);
+            }
+            if (messageFromClient.matches("#RANK")) {
+                int rank = getPlayerRank(player.getName());
+                if (rank == 0) {
+                    printWriter.println(NOT_IN_LEADERBOARD);
+                } else {
+
+                    printWriter.println(ANSI_BLUE + "PLAYER:  " + player.getName());
+                    printWriter.println("RANK:    " + rank);
+                    printWriter.println("WINS:    " + leaderboard.getLeaderboard().get(player.getName()) + ANSI_RESET);
+                }
             }
             if (messageFromClient.matches("#QUIT")) {
                 clientQuit = true;
@@ -119,7 +130,6 @@ public class Lobby implements Runnable {
                 printWriter.println(SERVER_CRASH_MESSAGE);
                 System.exit(0);
             }
-
             if (messageFromClient.contains("#GEEKQUIZ")) {
                 this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {
@@ -139,8 +149,10 @@ public class Lobby implements Runnable {
 
             if (!messageFromClient.equals("")
                     && !messageFromClient.matches("#SCORES")
+                    && !messageFromClient.matches("#RANK")
                     && !messageFromClient.matches("#RAGEQUIT")
-                    && !messageFromClient.matches("#QUIT")) {
+                    && !messageFromClient.matches("#QUIT")
+            ) {
                 broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
             }
         }
@@ -246,7 +258,7 @@ public class Lobby implements Runnable {
         }
         questionAnswered = true;
         playersThatFinishedQuestions++;
-        if (playersThatFinishedQuestions == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())){
+        if (playersThatFinishedQuestions == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())) {
             broadcastMessage(PLAYERS_READY);
         }
         while (!allLobbiesHaveAnsweredQuestion()) {
@@ -264,7 +276,7 @@ public class Lobby implements Runnable {
         game.spendingPhase(player, bufferedReader, printWriter, this);
         pointsSpent = true;
         playersThatFinishedBet++;
-        if (playersThatFinishedBet == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())){
+        if (playersThatFinishedBet == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())) {
             broadcastMessage(PLAYERS_READY);
         }
         while (!allLobbiesHaveSpentPoints()) {

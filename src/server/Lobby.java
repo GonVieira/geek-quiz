@@ -141,7 +141,12 @@ public class Lobby implements Runnable {
                 printWriter.println(INCORRECT_NUMBER_OF_PLAYERS);
             }
 
-            if (!messageFromClient.equals("") && !messageFromClient.contains("#")) {
+            if (!messageFromClient.equals("")
+                    && !messageFromClient.contains("#")
+                    && !messageFromClient.matches("#RANK")
+                    && !messageFromClient.matches("#RAGEQUIT")
+                    && !messageFromClient.matches("#QUIT")
+            ) {
                 broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
             }
         }

@@ -124,7 +124,7 @@ public class Lobby implements Runnable {
                 printWriter.println(SERVER_CRASH_MESSAGE);
                 System.exit(0);
             }
-            if (messageFromClient.contains("#GEEKQUIZ")) {
+            if (messageFromClient.matches("#GEEKQUIZ")) {
                 this.gameMaster = true;
                 if (lobbies.size() % 2 == 0) {
                     game.getTeam1().getPlayers().clear();
@@ -141,12 +141,7 @@ public class Lobby implements Runnable {
                 printWriter.println(INCORRECT_NUMBER_OF_PLAYERS);
             }
 
-            if (!messageFromClient.equals("")
-                    && !messageFromClient.matches("#SCORES")
-                    && !messageFromClient.matches("#RANK")
-                    && !messageFromClient.matches("#RAGEQUIT")
-                    && !messageFromClient.matches("#QUIT")
-            ) {
+            if (!messageFromClient.equals("") && !messageFromClient.contains("#")) {
                 broadcastMessage(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromClient);
             }
         }

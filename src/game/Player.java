@@ -20,11 +20,11 @@ public class Player {
         this.name = name;
     }
 
-    public void receiveQuestion(String question, int correctAnswer, Lobby lobby) {
+    public void receiveQuestion(String question, int correctAnswer, BufferedReader bufferedReader, PrintWriter printWriter, Lobby lobby) {
         saveQuestion(question);
-        lobby.getPrintWriter().println(QUESTIONS_BANNER + question);
+        printWriter.println(QUESTIONS_BANNER + question);
         String choice = checkIfValidInputOrIfUserQuit(1, 4, lobby);
-        checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, lobby.getPrintWriter());
+        checkIfIsCorrect(Integer.parseInt(choice), correctAnswer, printWriter);
     }
 
     public void saveQuestion(String question) {

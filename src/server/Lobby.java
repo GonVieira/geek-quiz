@@ -184,7 +184,7 @@ public class Lobby implements Runnable {
             printWriter.println(CLEAR);
             questionPhase();
             if (lobbies.size() % 2 != 0) {
-                if(gameMaster){stopMusic(music);}
+                stopMusic(music);
                 player.setScore(0);
                 chatRoom();
             }
@@ -194,7 +194,7 @@ public class Lobby implements Runnable {
             printWriter.println(CLEAR);
             spendingPhase();
             if (lobbies.size() % 2 != 0) {
-                if(gameMaster){stopMusic(music);}
+                stopMusic(music);
                 player.setScore(0);
                 chatRoom();
             }
@@ -206,7 +206,7 @@ public class Lobby implements Runnable {
                 advance = true;
                 broadcastMessage(PLAYERS_READY);
                 if (lobbies.size() % 2 != 0) {
-                    if(gameMaster){stopMusic(music);}
+                    stopMusic(music);
                     player.setScore(0);
                     chatRoom();
                 }
@@ -226,7 +226,7 @@ public class Lobby implements Runnable {
             printWriter.println(CLEAR);
             resolutionPhase();
             if (lobbies.size() % 2 != 0) {
-                if(gameMaster){stopMusic(music);}
+                stopMusic(music);
                 player.setScore(0);
                 chatRoom();
             }
@@ -235,21 +235,21 @@ public class Lobby implements Runnable {
     }
 
     public void questionPhase() {
-        game.distributeQuestions( this);
+        game.distributeQuestions(player, bufferedReader, printWriter, this);
         if (lobbies.size() % 2 != 0) {
-            if(gameMaster){stopMusic(music);}
+            stopMusic(music);
             player.setScore(0);
             return;
         }
-        game.distributeQuestions(this);
+        game.distributeQuestions(player, bufferedReader, printWriter, this);
         if (lobbies.size() % 2 != 0) {
-            if(gameMaster){stopMusic(music);}
+            stopMusic(music);
             player.setScore(0);
             return;
         }
-        game.distributeQuestions(this);
+        game.distributeQuestions(player, bufferedReader, printWriter, this);
         if (lobbies.size() % 2 != 0) {
-            if(gameMaster){stopMusic(music);}
+            stopMusic(music);
             player.setScore(0);
             return;
         }
@@ -270,8 +270,7 @@ public class Lobby implements Runnable {
     }
 
     public void spendingPhase() {
-        chatGame();
-        game.spendingPhase( this);
+        game.spendingPhase(player, bufferedReader, printWriter, this);
         pointsSpent = true;
         playersThatFinishedBet++;
         if (playersThatFinishedBet == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())) {
@@ -374,58 +373,6 @@ public class Lobby implements Runnable {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void broadcastMessageToTeam(String messageToSend) {
-        if (game.getTeam1().containsPlayer(this.player)) {
-            for (Player teamMate : game.getTeam1().getPlayers()) {
-                for (Lobby lobby : lobbies) {
-                    if (lobby.player.equals(teamMate)) {
-                        if (!lobby.clientUsername.equals(clientUsername)) {
-                            lobby.printWriter.println(messageToSend);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (Player teamMate : game.getTeam2().getPlayers()) {
-                for (Lobby lobby : lobbies) {
-                    if (lobby.player.equals(teamMate)) {
-                        if (!lobby.clientUsername.equals(clientUsername)) {
-                            lobby.printWriter.println(messageToSend);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /*IN-GAME CHAT*/
-
-    public void chatGame() {
-        printWriter.println(TEAMMATE_MESSAGE);
-        String messageFromTeammate = "";
-        try {
-            messageFromTeammate = bufferedReader.readLine();
-        } catch (IOException e) {
-            closeEverything(socket, bufferedReader, printWriter);
-        }
-        if (messageFromTeammate == null) {
-            closeEverything(socket, bufferedReader, printWriter);
-        }
-
-        if (messageFromTeammate.matches("#QUIT")) {
-            clientQuit = true;
-            return;
-        }
-        if (messageFromTeammate.matches("#RAGEQUIT")) {
-            printWriter.println(SERVER_CRASH_MESSAGE);
-            System.exit(0);
-        }
-        if (!messageFromTeammate.matches("#RAGEQUIT")
-                && !messageFromTeammate.matches("#QUIT")) {
-            broadcastMessageToTeam(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromTeammate);
         }
     }
 

@@ -13,9 +13,9 @@ import static utility.Messages.*;
 
 public class Server {
 
-    private static final int PORT = 1234;
+    private static final int PORT = 8080;
     private final ServerSocket serverSocket;
-    private ExecutorService threadPool = Executors.newFixedThreadPool(30);
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(30);
     public static final Game game = new Game();
     public static boolean gameStarted = false;
     public static ArrayList<Lobby> lobbies = new ArrayList<>();
@@ -58,16 +58,6 @@ public class Server {
                 game.getTeam1().getPlayers().add(lobbies.get(i).getPlayer());
             else
                 game.getTeam2().getPlayers().add(lobbies.get(i).getPlayer());
-        }
-    }
-
-    public void closeServerSocket() {
-        try {
-            if (serverSocket != null) {
-                serverSocket.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

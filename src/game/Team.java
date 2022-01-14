@@ -21,6 +21,10 @@ public class Team {
         this.antivirus = this.antivirus + antivirus;
     }
 
+    public void addFireWalls(int firewalls) {
+        this.firewalls = this.firewalls + firewalls;
+    }
+
     public void updateFirewalls(Team opposingTeam) {
 
         this.firewalls = Math.max(0, (this.firewalls - (Math.max((opposingTeam.getViruses() - this.antivirus), 0))));
@@ -45,19 +49,12 @@ public class Team {
         return players;
     }
 
-    public synchronized String getPlayersString() {
-        String result = "";
-        for (Player player : players) {
-            result += player.getName() + " | ";
-        }
-        return result;
-    }
-
     public boolean containsPlayer(Player player) {
         boolean check = false;
         for (Player listPlayer : players) {
             if (player.getName().equals(listPlayer.getName())) {
                 check = true;
+                return check;
             }
         }
         return check;

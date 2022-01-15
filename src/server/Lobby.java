@@ -35,7 +35,6 @@ public class Lobby implements Runnable {
     private static int playersThatFinishedBet = 0;
     private boolean resolutionChecked = false;
 
-
     private boolean clientQuit = false;
 
     private static final String MUSICPATH = "src/music/Output_1-2.wav";
@@ -58,7 +57,6 @@ public class Lobby implements Runnable {
             closeEverything(socket, bufferedReader, printWriter);
         }
     }
-
 
     @Override
     public void run() {
@@ -184,7 +182,9 @@ public class Lobby implements Runnable {
             printWriter.println(CLEAR);
             questionPhase();
             if (lobbies.size() % 2 != 0) {
-                stopMusic(music);
+                if (gameMaster) {
+                    stopMusic(music);
+                }
                 player.setScore(0);
                 chatRoom();
             }
@@ -194,7 +194,9 @@ public class Lobby implements Runnable {
             printWriter.println(CLEAR);
             spendingPhase();
             if (lobbies.size() % 2 != 0) {
-                stopMusic(music);
+                if (gameMaster) {
+                    stopMusic(music);
+                }
                 player.setScore(0);
                 chatRoom();
             }
@@ -206,7 +208,9 @@ public class Lobby implements Runnable {
                 advance = true;
                 broadcastMessage(PLAYERS_READY);
                 if (lobbies.size() % 2 != 0) {
-                    stopMusic(music);
+                    if (gameMaster) {
+                        stopMusic(music);
+                    }
                     player.setScore(0);
                     chatRoom();
                 }
@@ -226,7 +230,9 @@ public class Lobby implements Runnable {
             printWriter.println(CLEAR);
             resolutionPhase();
             if (lobbies.size() % 2 != 0) {
-                stopMusic(music);
+                if (gameMaster) {
+                    stopMusic(music);
+                }
                 player.setScore(0);
                 chatRoom();
             }
@@ -235,21 +241,27 @@ public class Lobby implements Runnable {
     }
 
     public void questionPhase() {
-        game.distributeQuestions(player, bufferedReader, printWriter, this);
+        game.distributeQuestions(this);
         if (lobbies.size() % 2 != 0) {
-            stopMusic(music);
+            if (gameMaster) {
+                stopMusic(music);
+            }
             player.setScore(0);
             return;
         }
-        game.distributeQuestions(player, bufferedReader, printWriter, this);
+        game.distributeQuestions(this);
         if (lobbies.size() % 2 != 0) {
-            stopMusic(music);
+            if (gameMaster) {
+                stopMusic(music);
+            }
             player.setScore(0);
             return;
         }
-        game.distributeQuestions(player, bufferedReader, printWriter, this);
+        game.distributeQuestions(this);
         if (lobbies.size() % 2 != 0) {
-            stopMusic(music);
+            if (gameMaster) {
+                stopMusic(music);
+            }
             player.setScore(0);
             return;
         }
@@ -270,7 +282,8 @@ public class Lobby implements Runnable {
     }
 
     public void spendingPhase() {
-        game.spendingPhase(player, bufferedReader, printWriter, this);
+        chatGame();
+        game.spendingPhase(this);
         pointsSpent = true;
         playersThatFinishedBet++;
         if (playersThatFinishedBet == (game.getTeam1().getPlayers().size() + game.getTeam2().getPlayers().size())) {
@@ -376,10 +389,59 @@ public class Lobby implements Runnable {
         }
     }
 
+    public void broadcastMessageToTeam(String messageToSend) {
+        if (game.getTeam1().containsPlayer(this.player)) {
+            for (Player teamMate : game.getTeam1().getPlayers()) {
+                for (Lobby lobby : lobbies) {
+                    if (lobby.player.equals(teamMate)) {
+                        if (!lobby.clientUsername.equals(clientUsername)) {
+                            lobby.printWriter.println(messageToSend);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (Player teamMate : game.getTeam2().getPlayers()) {
+                for (Lobby lobby : lobbies) {
+                    if (lobby.player.equals(teamMate)) {
+                        if (!lobby.clientUsername.equals(clientUsername)) {
+                            lobby.printWriter.println(messageToSend);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-    /**
-     * CHECKS
-     **/
+    /* IN-GAME CHAT */
+
+    public void chatGame() {
+        printWriter.println(TEAMMATE_MESSAGE);
+        String messageFromTeammate = "";
+        try {
+            messageFromTeammate = bufferedReader.readLine();
+        } catch (IOException e) {
+            closeEverything(socket, bufferedReader, printWriter);
+        }
+        if (messageFromTeammate == null) {
+            closeEverything(socket, bufferedReader, printWriter);
+        }
+        if (messageFromTeammate.matches("#QUIT")) {
+            clientQuit = true;
+            return;
+        }
+        if (messageFromTeammate.matches("#RAGEQUIT")) {
+            printWriter.println(SERVER_CRASH_MESSAGE);
+            System.exit(0);
+        }
+        if (!messageFromTeammate.matches("#RAGEQUIT")
+                && !messageFromTeammate.matches("#QUIT")) {
+            broadcastMessageToTeam(ANSI_GREEN + this.clientUsername + ANSI_RESET + ": " + messageFromTeammate);
+        }
+    }
+
+    /* CHECKS */
+
     public boolean teamsArePrinted() {
         return teamsPrinted;
     }
@@ -396,9 +458,7 @@ public class Lobby implements Runnable {
         return resolutionChecked;
     }
 
-    /**
-     * GETTERS
-     **/
+    /* GETTERS */
 
     public String getClientUsername() {
         return clientUsername;

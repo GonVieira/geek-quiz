@@ -49,8 +49,6 @@ public class Messages {
             "                                                           \n" + ANSI_RESET;
 
     //General Game prints
-    public static final String TEAM_1 = "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "       TEAM 1:       " + ANSI_RESET + "\n\n" + ANSI_RED_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" + "%s\n" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
-    public static final String TEAM_2 = "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "       TEAM 2:       " + ANSI_RESET + "\n\n" + ANSI_BLUE_BACKGROUND + ANSI_WHITE + "----------------------------------------------------------------------------------------\n" + "%s\n" + "----------------------------------------------------------------------------------------" + ANSI_RESET + "\n";
     public static final String PRESS_ENTER_TO_CONTINUE = "\n" + ANSI_BLUE + "Press Enter to continue:" + ANSI_RESET + "\n\n";
     public static final String PLAYERS_READY = ANSI_YELLOW + "All Players are ready! Press Enter:" + ANSI_RESET;
     public static final String INVALID_INPUT = "\n" + ANSI_RED_BACKGROUND + ANSI_BLACK + "Invalid Input. Try again:" + ANSI_RESET + "\n";
@@ -63,10 +61,11 @@ public class Messages {
     public static final String PLAYERS_HAVENT_ANSWERED = "\n\n" + ANSI_BLUE + "Not all players have answered! Please wait a sec!" + ANSI_RESET + "\n\n";
 
     //Spend Phase prints
+    public static final String TEAMMATE_MESSAGE = ANSI_WHITE_BACKGROUND + ANSI_BLACK + "You have only one chance to message your team. Write carefully.\n\n" + ANSI_RESET;
     public static final String SPEND_PHASE_BANNER = "\n\n" + ANSI_WHITE_BACKGROUND + ANSI_BLACK + "BET THE POINTS YOU HAVE EARNED!" + ANSI_RESET + "\n\n";
     public static final String POINTS = ANSI_YELLOW + "\nYour points are : " + ANSI_RESET + "%s" + "\n";
-    public static final String SPEND_POINTS_OR_PASS = ANSI_YELLOW + "\nChoose one of the following options:\n1)SPEND POINTS              2)PASS" + ANSI_RESET + "\n";
-    public static final String CHOOSE_ATTACK_OR_DEFENSE = ANSI_YELLOW + "\nChoose one of the following options:\n1)VIRUS(ATK)            2)ANTI-VIRUS(DEF)" + ANSI_RESET + "\n";
+    public static final String SPEND_POINTS_OR_PASS = ANSI_YELLOW + "\nChoose one of the following options:\n\n1)SPEND POINTS\n2)PASS" + ANSI_RESET + "\n";
+    public static final String CHOOSE_ATTACK_OR_DEFENSE_OR_FIREWALLS = ANSI_YELLOW + "\nChoose one of the following options:\n\n1)VIRUS(ATK)\n2)ANTI-VIRUS(DEF)\n3)FIREWALLS(HP)" + ANSI_RESET + "\n";
     public static final String CHOOSE_NUMBER_OF_POINTS = ANSI_YELLOW + "How many points do you want to spend?" + ANSI_RESET + "\n";
     public static final String PHASE_PASSED = "\n" + ANSI_YELLOW_BACKGROUND + ANSI_BLACK + "PHASE PASSED" + ANSI_RESET + "\n";
     public static final String NO_POINTS = "\n\n" + ANSI_CYAN_BACKGROUND + ANSI_BLACK + "YOU DON'T HAVE ANY POINTS TO SPEND" + ANSI_RESET + "\n";

@@ -53,7 +53,7 @@ public class Game {
 
                 switch (option2) {
                     case "1":
-                    lobby.getPrintWriter().printf(POINTS, player.getScore());
+                    lobby.getPrintWriter().printf(POINTS, lobby.getPlayer().getScore());
                     lobby.getPrintWriter().println(CHOOSE_NUMBER_OF_POINTS);
                     quantity = checkIfValidInputOrIfUserQuit(1, lobby.getPlayer().getScore(), lobby);
                     if (team1.containsPlayer(lobby.getPlayer())) {

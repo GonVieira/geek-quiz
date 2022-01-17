@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c56658e9-00c7-4ec4-a337-57ef9845a437" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/geek-quiz.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/geek-quiz/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/geek-quiz/game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/geek-quiz/game/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/geek-quiz/game/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/geek-quiz/game/Team.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/geek-quiz/game/Team.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/geek-quiz/server/Lobby.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/geek-quiz/server/Lobby.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/geek-quiz/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/geek-quiz/server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/geek-quiz/utility/Messages.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/geek-quiz/utility/Messages.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +19,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="23hGJusEaOSjbmbEsTC4hxiCsdD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,6 +30,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -56,5 +62,16 @@
       <updated>1642178842622</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
